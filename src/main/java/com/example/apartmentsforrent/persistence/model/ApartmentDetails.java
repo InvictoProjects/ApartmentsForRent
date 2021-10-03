@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.Year;
 
 public class ApartmentDetails {
+    private long id;
     private long apartmentId;
     private String address;
     private Year buildYear;
@@ -23,6 +24,14 @@ public class ApartmentDetails {
         this.floor = floor;
         this.area = area;
         this.quantityOfRooms = quantityOfRooms;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getApartmentId() {
