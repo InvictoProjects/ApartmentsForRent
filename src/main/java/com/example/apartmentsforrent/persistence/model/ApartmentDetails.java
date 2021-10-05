@@ -5,19 +5,17 @@ import java.time.Year;
 
 public class ApartmentDetails {
     private long id;
-    private long apartmentId;
     private String address;
     private Year buildYear;
     private BigDecimal price;
     private int floor;
-    private int area;
+    private float area;
     private int quantityOfRooms;
 
     public ApartmentDetails() {
     }
 
-    public ApartmentDetails(long apartmentId, String address, Year buildYear, BigDecimal price, int floor, int area, int quantityOfRooms) {
-        this.apartmentId = apartmentId;
+    public ApartmentDetails(String address, Year buildYear, BigDecimal price, int floor, float area, int quantityOfRooms) {
         this.address = address;
         this.buildYear = buildYear;
         this.price = price;
@@ -32,14 +30,6 @@ public class ApartmentDetails {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getApartmentId() {
-        return apartmentId;
-    }
-
-    public void setApartmentId(long apartmentId) {
-        this.apartmentId = apartmentId;
     }
 
     public String getAddress() {
@@ -74,11 +64,11 @@ public class ApartmentDetails {
         this.floor = floor;
     }
 
-    public int getArea() {
+    public float getArea() {
         return area;
     }
 
-    public void setArea(int area) {
+    public void setArea(float area) {
         this.area = area;
     }
 
