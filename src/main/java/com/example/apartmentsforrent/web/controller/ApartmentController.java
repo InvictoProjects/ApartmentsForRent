@@ -5,9 +5,13 @@ import com.example.apartmentsforrent.service.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Optional;
+
 @Controller
+@RequestMapping("apartment")
 public class ApartmentController {
 
     private final ApartmentService apartmentService;
@@ -17,14 +21,17 @@ public class ApartmentController {
         this.apartmentService = apartmentService;
     }
 
-    @GetMapping("/deleteApartment")
+    @GetMapping("/delete")
     public String deleteApartment(@RequestParam String id) {
-        Apartment apartment = apartmentService.findById(id);
-        boolean result = apartmentService.deleteApartment(apartment);
-        if (!result) {
+        try {
+            Optional<Apartment> optionalApartment = apartmentService.findById(Long.parseLong(id));
+            boolean result = apartmentService.deleteApartment(optionalApartment.orElseThrow(IllegalArgumentException::new));
+            if (result) {
+                return "redirect:/";
+            }
+            return "error";
+        } catch (IllegalArgumentException e) {
             return "error";
         }
-        //TODO: specify url or template to go over
-        return "redirect:/";
     }
 }
