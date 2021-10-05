@@ -44,7 +44,7 @@
         <input type="submit" th:value="#{search.buttonName}">
     </form>
 </div>
-<div th:if="${apartments != null || apartments.size() > 0}">
+<div th:if="${apartments != null && apartments.size() > 0}">
     <table>
         <thead>
         <tr>
