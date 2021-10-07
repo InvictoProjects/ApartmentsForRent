@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+<div>
+    <p th:text="#{search.title}"></p>
+</div>
+<div>
+    <form method="post" th:action="@{/search}">
+        <label>
+            <span th:text="#{search.price}"></span>
+            <input type="number" name="priceFrom" min="0" th:placeholder="#{search.from}">
+            <input type="number" name="priceTo" min="0" th:placeholder="#{search.to}">
+        </label>
+        <br>
+        <label>
+            <span th:text="#{search.quantityOfRooms}"></span>
+            <input type="number" name="quantityOfRoomsFrom" min="0" th:placeholder="#{search.from}">
+            <input type="number" name="quantityOfRoomsTo" min="0" th:placeholder="#{search.to}">
+        </label>
+        <br>
+        <label>
+            <span th:text="#{search.area}"></span>
+            <input type="number" name="areaFrom" min="0" th:placeholder="#{search.from}">
+            <input type="number" name="areaTo" min="0" th:placeholder="#{search.to}">
+        </label>
+        <br>
+        <label>
+            <span th:text="#{search.floor}"></span>
+            <input type="number" name="floorFrom" min="0" th:placeholder="#{search.from}">
+            <input type="number" name="floorTo" min="0" th:placeholder="#{search.to}">
+        </label>
+        <br>
+        <label>
+            <span th:text="#{search.yearOfBuild}"></span>
+            <input type="number" name="yearOfBuildFrom" min="0" th:placeholder="#{search.from}">
+            <input type="number" name="yearOfBuildTo" min="0" th:placeholder="#{search.to}">
+        </label>
+        <br>
+        <input type="submit" th:value="#{search.buttonName}">
+    </form>
+</div>
+<div th:if="${apartments != null && apartments.size() > 0}">
+    <table>
+        <thead>
+        <tr>
+            <th>Адреса</th>
+            <th>Ціна</th>
+            <th>Площа</th>
+            <th>Кількість кімнат</th>
+        </tr>
+        </thead>
+        <tr th:each="apartment : ${apartments}">
+            <td>
+                <a th:text="${apartment.apartmentDetails.address}" th:href="@{'/apartment/'+${apartment.id}}"></a>
+            </td>
+            <td th:text="${apartment.apartmentDetails.price}"></td>
+            <td th:text="${apartment.apartmentDetails.area}"></td>
+            <td th:text="${apartment.apartmentDetails.quantityOfRooms}"></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <a th:href="@{/}" th:text="#{search.toHome}"></a>
+</div>
+</body>
+</html>
