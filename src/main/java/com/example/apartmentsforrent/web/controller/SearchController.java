@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.time.Year;
 import java.util.List;
 
 @Controller
@@ -36,8 +37,8 @@ public class SearchController {
                                    @RequestParam(required = false) Float areaTo,
                                    @RequestParam(required = false) Integer floorFrom,
                                    @RequestParam(required = false) Integer floorTo,
-                                   @RequestParam(required = false) Integer yearOfBuildFrom,
-                                   @RequestParam(required = false) Integer yearOfBuildTo) {
+                                   @RequestParam(required = false) Year yearOfBuildFrom,
+                                   @RequestParam(required = false) Year yearOfBuildTo) {
         List<Apartment> apartments = apartmentService.search(priceFrom, priceTo, quantityOfRoomsFrom, quantityOfRoomsTo,
                 areaFrom, areaTo, floorFrom, floorTo, yearOfBuildFrom, yearOfBuildTo);
         model.addAttribute("apartments", apartments);

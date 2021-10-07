@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.Year;
 import java.util.List;
 
 @Service
@@ -22,7 +23,7 @@ public class ApartmentServiceImpl implements ApartmentService {
     @Override
     public List<Apartment> search(BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom,
                                   Integer quantityOfRoomsTo, Float areaFrom, Float areaTo, Integer floorFrom,
-                                  Integer floorTo, Integer yearOfBuildFrom, Integer yearOfBuildTo) {
+                                  Integer floorTo, Year yearOfBuildFrom, Year yearOfBuildTo) {
         return apartmentRepository.search(priceFrom, priceTo, quantityOfRoomsFrom, quantityOfRoomsTo, areaFrom,
                 areaTo, floorFrom, floorTo, yearOfBuildFrom, yearOfBuildTo);
     }
