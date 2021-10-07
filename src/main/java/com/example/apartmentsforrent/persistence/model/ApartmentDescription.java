@@ -2,13 +2,11 @@ package com.example.apartmentsforrent.persistence.model;
 
 public class ApartmentDescription {
     private long id;
-    private long apartmentId;
     private String condition;
     private String buildingType;
     private String additionalInfo;
 
-    public ApartmentDescription(long apartmentId, String condition, String buildingType, String additionalInfo) {
-        this.apartmentId = apartmentId;
+    public ApartmentDescription(String condition, String buildingType, String additionalInfo) {
         this.condition = condition;
         this.buildingType = buildingType;
         this.additionalInfo = additionalInfo;
@@ -23,14 +21,6 @@ public class ApartmentDescription {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getApartmentId() {
-        return apartmentId;
-    }
-
-    public void setApartmentId(long apartmentId) {
-        this.apartmentId = apartmentId;
     }
 
     public String getCondition() {
