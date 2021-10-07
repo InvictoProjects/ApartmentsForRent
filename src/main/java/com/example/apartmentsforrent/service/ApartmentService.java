@@ -5,6 +5,7 @@ import com.example.apartmentsforrent.persistence.model.Apartment;
 import java.math.BigDecimal;
 import java.time.Year;
 import java.util.List;
+import java.util.Optional;
 
 public interface ApartmentService {
 
@@ -12,4 +13,7 @@ public interface ApartmentService {
                            Float areaFrom, Float areaTo, Integer floorFrom, Integer floorTo, Year yearOfBuildFrom,
                            Year yearOfBuildTo);
 
+    boolean deleteApartment(Apartment apartment);
+
+    Optional<Apartment> findById(long id);
 }
