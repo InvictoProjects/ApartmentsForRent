@@ -1,10 +1,12 @@
 package com.example.apartmentsforrent.persistence.repository.impl;
 
+import com.example.apartmentsforrent.persistence.Checker;
 import com.example.apartmentsforrent.persistence.model.Apartment;
 import com.example.apartmentsforrent.persistence.model.ApartmentDescription;
 import com.example.apartmentsforrent.persistence.model.ApartmentDetails;
 import com.example.apartmentsforrent.persistence.model.Owner;
 import com.example.apartmentsforrent.persistence.repository.ApartmentRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -115,13 +117,20 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
         List<Apartment> apartments = new ArrayList<>();
         for (Map.Entry<Long, Apartment> entry : databaseMap.entrySet()) {
             Apartment apartmentI = entry.getValue();
-            boolean isPriceSuitable = check(priceFrom, priceTo, apartmentI.getApartmentDetails().getPrice(), BigDecimal.ZERO);
-            boolean isQuantityOfRoomsSuitable = check(quantityOfRoomsFrom, quantityOfRoomsTo,
+
+            boolean isPriceSuitable = checkerProvider().check(priceFrom, priceTo, apartmentI.getApartmentDetails().getPrice(),
+                    BigDecimal.ZERO);
+
+            boolean isQuantityOfRoomsSuitable = checkerProvider().check(quantityOfRoomsFrom, quantityOfRoomsTo,
                     apartmentI.getApartmentDetails().getQuantityOfRooms(), 0);
-            boolean isAreaSuitable = check(areaFrom, areaTo, apartmentI.getApartmentDetails().getArea(), .0f);
-            boolean isFloorSuitable = check(floorFrom, floorTo, apartmentI.getApartmentDetails().getFloor(), 0);
-            boolean isYearOfBuildSuitable = check(yearOfBuildFrom, yearOfBuildTo,
+
+            boolean isAreaSuitable = checkerProvider().check(areaFrom, areaTo, apartmentI.getApartmentDetails().getArea(), .0f);
+
+            boolean isFloorSuitable = checkerProvider().check(floorFrom, floorTo, apartmentI.getApartmentDetails().getFloor(), 0);
+
+            boolean isYearOfBuildSuitable = checkerProvider().check(yearOfBuildFrom, yearOfBuildTo,
                     apartmentI.getApartmentDetails().getBuildYear(), Year.of(0));
+
             if (isPriceSuitable && isQuantityOfRoomsSuitable && isAreaSuitable && isFloorSuitable && isYearOfBuildSuitable) {
                 apartments.add(apartmentI);
             }
@@ -129,17 +138,8 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
         return apartments;
     }
 
-    private <T extends Comparable<T>> boolean check(T from, T to, T checking, T zero) {
-        if (from == null && to == null) {
-            return true;
-        } else if (to == null) {
-            return checking.compareTo(from) > 0;
-        } else {
-            if (from == null) {
-                from = zero;
-            }
-            return ((checking.compareTo(from) > 0) || checking.equals(from) &&
-                    (to.compareTo(checking) > 0) || to.equals(from));
-        }
+    @Bean
+    private Checker checkerProvider() {
+        return new Checker();
     }
 }
