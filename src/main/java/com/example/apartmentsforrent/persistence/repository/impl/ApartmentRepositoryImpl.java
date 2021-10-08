@@ -20,20 +20,66 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
 
     @PostConstruct
     private void createDatabase() {
-        Owner owner1 = new Owner("Name1", "Surname1", "owner1@gmail.com", "+38090452342",
-                "ssdfsdf23d");
-        Owner owner2 = new Owner("Name2", "Surname2", "owner2@gmail.com", "+38090452222",
-                "ssdfsasdasd23d");
-        ApartmentDescription description1 = new ApartmentDescription("qwr23rwersfsdrsdr3", "asd",
-                "asdsd");
-        ApartmentDescription description2 = new ApartmentDescription("qwr23rwersfsdrsdr3", "asd",
-                "asdsd");
-        ApartmentDetails details1 = new ApartmentDetails("asdasd", Year.of(1234), new BigDecimal(1234),
-                12, 12, 12);
-        ApartmentDetails details2 = new ApartmentDetails("dasd", Year.of(1324), new BigDecimal("234.12"),
-                13, 12, 13);
-        save(new Apartment(details1, description1, owner1));
-        save(new Apartment(details2, description2, owner2));
+        Owner owner1 = new Owner.Builder()
+                .setName("Name1")
+                .setSurname("Surname1")
+                .setEmail("owner1@hazain.com")
+                .setPhoneNumber("+380111111111")
+                .setPasswordHash("2e23rwefstgsdg")
+                .build();
+
+        Owner owner2 = new Owner.Builder()
+                .setName("Name2")
+                .setSurname("Surname2")
+                .setEmail("owner2@hazain.com")
+                .setPhoneNumber("+380111112222")
+                .setPasswordHash("2e212323tgsdg")
+                .build();
+
+        ApartmentDescription description1 = new ApartmentDescription.Builder()
+                .setBuildingType("Some type")
+                .setCondition("Some condition")
+                .setAdditionalInfo("Additional information")
+                .build();
+
+        ApartmentDescription description2 = new ApartmentDescription.Builder()
+                .setBuildingType("Some type2")
+                .setCondition("Some condition2")
+                .setAdditionalInfo("Additional information2")
+                .build();
+
+        ApartmentDetails details1 = new ApartmentDetails.Builder()
+                .setAddress("St. Peremohy, bldg. 12")
+                .setBuildYear(Year.of(2012))
+                .setPrice(new BigDecimal("70000.50"))
+                .setArea(163.12f)
+                .setFloor(10)
+                .setQuantityOfRooms(3)
+                .build();
+
+        ApartmentDetails details2 = new ApartmentDetails.Builder()
+                .setAddress("Sq. Troyana, bldg. 32")
+                .setBuildYear(Year.of(2019))
+                .setPrice(new BigDecimal("1170000.50"))
+                .setArea(200)
+                .setFloor(3)
+                .setQuantityOfRooms(4)
+                .build();
+
+        Apartment apartment1 = new Apartment.Builder()
+                .setOwner(owner1)
+                .setApartmentDetails(details1)
+                .setApartmentDescription(description1)
+                .build();
+
+        Apartment apartment2 = new Apartment.Builder()
+                .setOwner(owner2)
+                .setApartmentDetails(details2)
+                .setApartmentDescription(description2)
+                .build();
+
+        this.save(apartment1);
+        this.save(apartment2);
     }
 
     @Override
@@ -69,67 +115,31 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
         List<Apartment> apartments = new ArrayList<>();
         for (Map.Entry<Long, Apartment> entry : databaseMap.entrySet()) {
             Apartment apartmentI = entry.getValue();
-            if (checkBigDecimal(priceFrom, priceTo, apartmentI.getApartmentDetails().getPrice()) &&
-                    checkFloat(areaFrom, areaTo, apartmentI.getApartmentDetails().getArea()) &&
-                    checkInteger(quantityOfRoomsFrom, quantityOfRoomsTo, apartmentI.getApartmentDetails().getQuantityOfRooms()) &&
-                    checkInteger(floorFrom, floorTo, apartmentI.getApartmentDetails().getFloor()) &&
-                    checkYear(yearOfBuildFrom, yearOfBuildTo, apartmentI.getApartmentDetails().getBuildYear())) {
+            boolean isPriceSuitable = check(priceFrom, priceTo, apartmentI.getApartmentDetails().getPrice(), BigDecimal.ZERO);
+            boolean isQuantityOfRoomsSuitable = check(quantityOfRoomsFrom, quantityOfRoomsTo,
+                    apartmentI.getApartmentDetails().getQuantityOfRooms(), 0);
+            boolean isAreaSuitable = check(areaFrom, areaTo, apartmentI.getApartmentDetails().getArea(), .0f);
+            boolean isFloorSuitable = check(floorFrom, floorTo, apartmentI.getApartmentDetails().getFloor(), 0);
+            boolean isYearOfBuildSuitable = check(yearOfBuildFrom, yearOfBuildTo,
+                    apartmentI.getApartmentDetails().getBuildYear(), Year.of(0));
+            if (isPriceSuitable && isQuantityOfRoomsSuitable && isAreaSuitable && isFloorSuitable && isYearOfBuildSuitable) {
                 apartments.add(apartmentI);
             }
         }
         return apartments;
     }
 
-    private boolean checkYear(Year yearOfBuildFrom, Year yearOfBuildTo, Year buildYear) {
-        if (yearOfBuildFrom == null && yearOfBuildTo == null) {
+    private <T extends Comparable<T>> boolean check(T from, T to, T checking, T zero) {
+        if (from == null && to == null) {
             return true;
-        } else if (yearOfBuildTo == null) {
-            return buildYear.compareTo(yearOfBuildFrom) > 0;
+        } else if (to == null) {
+            return checking.compareTo(from) > 0;
         } else {
-            if (yearOfBuildFrom == null) {
-                yearOfBuildFrom = Year.of(0);
+            if (from == null) {
+                from = zero;
             }
-            return (buildYear.compareTo(yearOfBuildFrom) > 0 && yearOfBuildTo.compareTo(buildYear) > 0);
-        }
-    }
-
-    private boolean checkBigDecimal(BigDecimal priceFrom, BigDecimal priceTo, BigDecimal priceToCheck) {
-        if (priceFrom == null && priceTo == null) {
-            return true;
-        } else if (priceTo == null) {
-            return priceToCheck.compareTo(priceFrom) > 0;
-        } else {
-            if (priceFrom == null) {
-                priceFrom = BigDecimal.ZERO;
-            }
-            return ((priceToCheck.compareTo(priceFrom) > 0) || priceToCheck.equals(priceFrom) &&
-                    (priceTo.compareTo(priceToCheck) > 0) || priceTo.equals(priceFrom));
-        }
-    }
-
-    private boolean checkInteger(Integer priceFrom, Integer priceTo, Integer priceToCheck) {
-        if (priceFrom == null && priceTo == null) {
-            return true;
-        } else if (priceTo == null) {
-            return priceToCheck.compareTo(priceFrom) > 0;
-        } else {
-            if (priceFrom == null) {
-                priceFrom = 0;
-            }
-            return (priceToCheck >= priceFrom && priceTo >= priceToCheck);
-        }
-    }
-
-    private boolean checkFloat(Float priceFrom, Float priceTo, Float priceToCheck) {
-        if (priceFrom == null && priceTo == null) {
-            return true;
-        } else if (priceTo == null) {
-            return priceToCheck.compareTo(priceFrom) > 0;
-        } else {
-            if (priceFrom == null) {
-                priceFrom = 0.0f;
-            }
-            return (priceToCheck >= priceFrom && priceTo >= priceToCheck);
+            return ((checking.compareTo(from) > 0) || checking.equals(from) &&
+                    (to.compareTo(checking) > 0) || to.equals(from));
         }
     }
 }
