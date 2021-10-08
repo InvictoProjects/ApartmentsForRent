@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ApartmentService {
 
-    boolean deleteApartment(Apartment apartment);
+    boolean deleteById(long apartment);
 
     Optional<Apartment> findById(long id);
 

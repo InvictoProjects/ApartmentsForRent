@@ -22,7 +22,12 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override  
-    public boolean deleteApartment(Apartment apartment) {
+    public boolean deleteById(long id) {
+        Optional<Apartment> optionalApartment = findById(id);
+        if (optionalApartment.isEmpty()) {
+            return false;
+        }
+        Apartment apartment = optionalApartment.get();
         return apartmentRepository.delete(apartment);
     }
 
@@ -32,7 +37,9 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public List<Apartment> search(BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom, Integer quantityOfRoomsTo, Float areaFrom, Float areaTo, Integer floorFrom, Integer floorTo, Year yearOfBuildFrom, Year yearOfBuildTo) {
+    public List<Apartment> search(BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom,
+                                  Integer quantityOfRoomsTo, Float areaFrom, Float areaTo, Integer floorFrom,
+                                  Integer floorTo, Year yearOfBuildFrom, Year yearOfBuildTo) {
         return apartmentRepository.search(priceFrom, priceTo, quantityOfRoomsFrom, quantityOfRoomsTo, areaFrom,
                 areaTo, floorFrom, floorTo, yearOfBuildFrom, yearOfBuildTo);
     }
