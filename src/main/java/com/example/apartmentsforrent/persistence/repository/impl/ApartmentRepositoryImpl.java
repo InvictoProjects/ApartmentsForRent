@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.Year;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class ApartmentRepositoryImpl implements ApartmentRepository {
@@ -61,5 +60,72 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
     public boolean delete(Apartment apartment) {
         Apartment removed = databaseMap.remove(apartment.getId());
         return removed != null;
+    }
+
+    @Override
+    public List<Apartment> search(BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom,
+                                  Integer quantityOfRoomsTo, Float areaFrom, Float areaTo, Integer floorFrom,
+                                  Integer floorTo, Year yearOfBuildFrom, Year yearOfBuildTo) {
+        List<Apartment> apartments = new ArrayList<>();
+        for (Map.Entry<Long, Apartment> entry : databaseMap.entrySet()) {
+            Apartment apartmentI = entry.getValue();
+            if (checkPrice(priceFrom, priceTo, apartmentI.getApartmentDetails().getPrice()) &&
+                    checkArea(areaFrom, areaTo, apartmentI.getApartmentDetails().getArea()) &&
+                    checkQuantity(quantityOfRoomsFrom, quantityOfRoomsTo, apartmentI.getApartmentDetails().getQuantityOfRooms()) &&
+                    checkQuantity(floorFrom, floorTo, apartmentI.getApartmentDetails().getFloor()) &&
+                    checkYear(yearOfBuildFrom, yearOfBuildTo, apartmentI.getApartmentDetails().getBuildYear())) {
+                apartments.add(apartmentI);
+            }
+        }
+        return apartments;
+    }
+
+    private boolean checkYear(Year yearOfBuildFrom, Year yearOfBuildTo, Year buildYear) {
+        if (yearOfBuildFrom == null && yearOfBuildTo == null) {
+            return true;
+        } else if (yearOfBuildTo == null) {
+            return buildYear.compareTo(yearOfBuildFrom) > 0;
+        } else {
+            if (yearOfBuildFrom == null) {
+                yearOfBuildFrom = Year.of(0);
+            }
+            return (buildYear.compareTo(yearOfBuildFrom) > 0 && yearOfBuildTo.compareTo(buildYear) > 0);
+        }
+    }
+
+    private boolean checkPrice(BigDecimal priceFrom, BigDecimal priceTo, BigDecimal priceToCheck) {
+        if (priceFrom == null && priceTo == null) {
+            return true;
+        } else if (priceTo == null) {
+            return priceToCheck.compareTo(priceFrom) > 0;
+        } else {
+            return (priceToCheck.compareTo(priceFrom) > 0 && priceTo.compareTo(priceToCheck) > 0);
+        }
+    }
+
+    private boolean checkQuantity(Integer priceFrom, Integer priceTo, Integer priceToCheck) {
+        if (priceFrom == null && priceTo == null) {
+            return true;
+        } else if (priceTo == null) {
+            return priceToCheck.compareTo(priceFrom) > 0;
+        } else {
+            if (priceFrom == null) {
+                priceFrom = 0;
+            }
+            return (priceToCheck.compareTo(priceFrom) > 0 && priceTo.compareTo(priceToCheck) > 0);
+        }
+    }
+
+    private boolean checkArea(Float priceFrom, Float priceTo, Float priceToCheck) {
+        if (priceFrom == null && priceTo == null) {
+            return true;
+        } else if (priceTo == null) {
+            return priceToCheck.compareTo(priceFrom) > 0;
+        } else {
+            if (priceFrom == null) {
+                priceFrom = 0.0f;
+            }
+            return (priceToCheck.compareTo(priceFrom) > 0 && priceTo.compareTo(priceToCheck) > 0);
+        }
     }
 }

@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public interface ApartmentService {
 
-    List<Apartment> search(BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom, Integer quantityOfRoomsTo,
-                           Float areaFrom, Float areaTo, Integer floorFrom, Integer floorTo, Year yearOfBuildFrom,
-                           Year yearOfBuildTo);
-
     boolean deleteApartment(Apartment apartment);
 
     Optional<Apartment> findById(long id);
+
+    List<Apartment> search(BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom, Integer quantityOfRoomsTo,
+                           Float areaFrom, Float areaTo, Integer floorFrom, Integer floorTo, Year yearOfBuildFrom,
+                           Year yearOfBuildTo);
 }
