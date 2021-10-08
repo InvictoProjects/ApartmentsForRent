@@ -6,13 +6,13 @@ public class Checker {
         if (from == null && to == null) {
             return true;
         } else if (to == null) {
-            return checking.compareTo(from) > 0;
+            return (checking.compareTo(from) > 0 || checking.equals(from));
         } else {
             if (from == null) {
                 from = zero;
             }
-            return ((checking.compareTo(from) > 0) || checking.equals(from) &&
-                    (to.compareTo(checking) > 0) || to.equals(from));
+            return ((checking.compareTo(from) > 0 || checking.equals(from)) &&
+                    (to.compareTo(checking) > 0) || to.equals(checking));
         }
     }
 }
