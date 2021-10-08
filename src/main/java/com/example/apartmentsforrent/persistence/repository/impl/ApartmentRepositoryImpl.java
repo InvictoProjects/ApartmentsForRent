@@ -5,14 +5,14 @@ import com.example.apartmentsforrent.persistence.model.ApartmentDescription;
 import com.example.apartmentsforrent.persistence.model.ApartmentDetails;
 import com.example.apartmentsforrent.persistence.model.Owner;
 import com.example.apartmentsforrent.persistence.repository.ApartmentRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.Year;
 import java.util.*;
 
-@Component
+@Repository
 public class ApartmentRepositoryImpl implements ApartmentRepository {
 
     private final HashMap<Long, Apartment> databaseMap = new HashMap<>();
@@ -69,10 +69,10 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
         List<Apartment> apartments = new ArrayList<>();
         for (Map.Entry<Long, Apartment> entry : databaseMap.entrySet()) {
             Apartment apartmentI = entry.getValue();
-            if (checkPrice(priceFrom, priceTo, apartmentI.getApartmentDetails().getPrice()) &&
-                    checkArea(areaFrom, areaTo, apartmentI.getApartmentDetails().getArea()) &&
-                    checkQuantity(quantityOfRoomsFrom, quantityOfRoomsTo, apartmentI.getApartmentDetails().getQuantityOfRooms()) &&
-                    checkQuantity(floorFrom, floorTo, apartmentI.getApartmentDetails().getFloor()) &&
+            if (checkBigDecimal(priceFrom, priceTo, apartmentI.getApartmentDetails().getPrice()) &&
+                    checkFloat(areaFrom, areaTo, apartmentI.getApartmentDetails().getArea()) &&
+                    checkInteger(quantityOfRoomsFrom, quantityOfRoomsTo, apartmentI.getApartmentDetails().getQuantityOfRooms()) &&
+                    checkInteger(floorFrom, floorTo, apartmentI.getApartmentDetails().getFloor()) &&
                     checkYear(yearOfBuildFrom, yearOfBuildTo, apartmentI.getApartmentDetails().getBuildYear())) {
                 apartments.add(apartmentI);
             }
@@ -93,17 +93,21 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
         }
     }
 
-    private boolean checkPrice(BigDecimal priceFrom, BigDecimal priceTo, BigDecimal priceToCheck) {
+    private boolean checkBigDecimal(BigDecimal priceFrom, BigDecimal priceTo, BigDecimal priceToCheck) {
         if (priceFrom == null && priceTo == null) {
             return true;
         } else if (priceTo == null) {
             return priceToCheck.compareTo(priceFrom) > 0;
         } else {
-            return (priceToCheck.compareTo(priceFrom) > 0 && priceTo.compareTo(priceToCheck) > 0);
+            if (priceFrom == null) {
+                priceFrom = BigDecimal.ZERO;
+            }
+            return ((priceToCheck.compareTo(priceFrom) > 0) || priceToCheck.equals(priceFrom) &&
+                    (priceTo.compareTo(priceToCheck) > 0) || priceTo.equals(priceFrom));
         }
     }
 
-    private boolean checkQuantity(Integer priceFrom, Integer priceTo, Integer priceToCheck) {
+    private boolean checkInteger(Integer priceFrom, Integer priceTo, Integer priceToCheck) {
         if (priceFrom == null && priceTo == null) {
             return true;
         } else if (priceTo == null) {
@@ -112,11 +116,11 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
             if (priceFrom == null) {
                 priceFrom = 0;
             }
-            return (priceToCheck.compareTo(priceFrom) > 0 && priceTo.compareTo(priceToCheck) > 0);
+            return (priceToCheck >= priceFrom && priceTo >= priceToCheck);
         }
     }
 
-    private boolean checkArea(Float priceFrom, Float priceTo, Float priceToCheck) {
+    private boolean checkFloat(Float priceFrom, Float priceTo, Float priceToCheck) {
         if (priceFrom == null && priceTo == null) {
             return true;
         } else if (priceTo == null) {
@@ -125,7 +129,7 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
             if (priceFrom == null) {
                 priceFrom = 0.0f;
             }
-            return (priceToCheck.compareTo(priceFrom) > 0 && priceTo.compareTo(priceToCheck) > 0);
+            return (priceToCheck >= priceFrom && priceTo >= priceToCheck);
         }
     }
 }
