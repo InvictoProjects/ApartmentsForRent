@@ -48,10 +48,10 @@
     <table>
         <thead>
         <tr>
-            <th>Адреса</th>
-            <th>Ціна</th>
-            <th>Площа</th>
-            <th>Кількість кімнат</th>
+            <th th:text="#{search.address}"></th>
+            <th th:text="#{search.price}"></th>
+            <th th:text="#{search.area}"></th>
+            <th th:text="#{search.quantityOfRooms}"></th>
         </tr>
         </thead>
         <tr th:each="apartment : ${apartments}">
