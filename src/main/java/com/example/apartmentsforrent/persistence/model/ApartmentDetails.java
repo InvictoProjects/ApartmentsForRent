@@ -24,6 +24,65 @@ public class ApartmentDetails {
         this.quantityOfRooms = quantityOfRooms;
     }
 
+    public static class Builder {
+        private long id;
+        private String address;
+        private Year buildYear;
+        private BigDecimal price;
+        private int floor;
+        private float area;
+        private int quantityOfRooms;
+
+        public Builder setId(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder setBuildYear(Year buildYear) {
+            this.buildYear = buildYear;
+            return this;
+        }
+
+        public Builder setPrice(BigDecimal price) {
+            this.price = price;
+            return this;
+        }
+
+        public Builder setFloor(int floor) {
+            this.floor = floor;
+            return this;
+        }
+
+        public Builder setArea(float area) {
+            this.area = area;
+            return this;
+        }
+
+        public Builder setQuantityOfRooms(int quantityOfRooms) {
+            this.quantityOfRooms = quantityOfRooms;
+            return this;
+        }
+
+        public ApartmentDetails build() {
+            return new ApartmentDetails(this);
+        }
+    }
+
+    private ApartmentDetails(Builder builder) {
+        this.id = builder.id;
+        this.address = builder.address;
+        this.buildYear = builder.buildYear;
+        this.price = builder.price;
+        this.floor = builder.floor;
+        this.area = builder.area;
+        this.quantityOfRooms = builder.quantityOfRooms;
+    }
+
     public long getId() {
         return id;
     }

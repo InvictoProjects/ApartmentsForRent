@@ -19,6 +19,58 @@ public class Owner {
     public Owner() {
     }
 
+    public static class Builder {
+        private long id;
+        private String name;
+        private String surname;
+        private String email;
+        private String phoneNumber;
+        private String passwordHash;
+
+        public Builder setId(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setSurname(String surname) {
+            this.surname = surname;
+            return this;
+        }
+
+        public Builder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder setPasswordHash(String passwordHash) {
+            this.passwordHash = passwordHash;
+            return this;
+        }
+
+        public Owner build() {
+            return new Owner(this);
+        }
+    }
+
+    private Owner(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.surname = builder.surname;
+        this.email = builder.email;
+        this.phoneNumber = builder.phoneNumber;
+        this.passwordHash = builder.passwordHash;
+    }
+
     public long getId() {
         return id;
     }

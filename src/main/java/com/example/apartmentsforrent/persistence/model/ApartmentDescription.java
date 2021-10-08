@@ -15,6 +15,44 @@ public class ApartmentDescription {
     public ApartmentDescription() {
     }
 
+    public static class Builder {
+        private long id;
+        private String condition;
+        private String buildingType;
+        private String additionalInfo;
+
+        public Builder setId(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setCondition(String condition) {
+            this.condition = condition;
+            return this;
+        }
+
+        public Builder setBuildingType(String buildingType) {
+            this.buildingType = buildingType;
+            return this;
+        }
+
+        public Builder setAdditionalInfo(String additionalInfo) {
+            this.additionalInfo = additionalInfo;
+            return this;
+        }
+
+        public ApartmentDescription build() {
+            return new ApartmentDescription(this);
+        }
+    }
+
+    private ApartmentDescription(Builder builder) {
+        this.id = builder.id;
+        this.additionalInfo = builder.additionalInfo;
+        this.buildingType = builder.buildingType;
+        this.condition = builder.condition;
+    }
+
     public long getId() {
         return id;
     }
@@ -46,4 +84,5 @@ public class ApartmentDescription {
     public void setAdditionalInfo(String additionalInfo) {
         this.additionalInfo = additionalInfo;
     }
+
 }
