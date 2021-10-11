@@ -16,21 +16,23 @@ public class OwnerRepositoryImpl implements OwnerRepository {
 
     @PostConstruct
     public void populateDb() {
-        Owner owner1 = new Owner();
-        owner1.setId(1L);
-        owner1.setName("Michael");
-        owner1.setSurname("Jackson");
-        owner1.setEmail("jackson@gmail.com");
-        owner1.setPhoneNumber("380991853345");
-        owner1.setPasswordHash("jdiJdflJSdfnG");
+        Owner owner1 = new Owner.Builder()
+                .setId(1L)
+                .setName("Michael")
+                .setSurname("Jackson")
+                .setEmail("jackson@gmail.com")
+                .setPhoneNumber("380991853345")
+                .setPasswordHash("jdiJdflJSdfnG")
+                .build();
 
-        Owner owner2 = new Owner();
-        owner2.setId(2L);
-        owner2.setName("Johny");
-        owner2.setSurname("Depp");
-        owner2.setEmail("depp@gmail.com");
-        owner2.setPhoneNumber("380991852245");
-        owner2.setPasswordHash("jdiGdNORERTnG");
+        Owner owner2 = new Owner.Builder()
+                .setId(2L)
+                .setName("Johny")
+                .setSurname("Depp")
+                .setEmail("depp@gmail.com")
+                .setPhoneNumber("380991852245")
+                .setPasswordHash("jdiGdNORERTnG")
+                .build();
 
         db.put(owner1.getId(), owner1);
         db.put(owner2.getId(), owner2);

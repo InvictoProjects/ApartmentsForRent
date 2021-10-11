@@ -6,12 +6,6 @@ public class Apartment {
     private ApartmentDescription apartmentDescription;
     private Owner owner;
 
-    public Apartment(ApartmentDetails apartmentDetails, ApartmentDescription apartmentDescription, Owner owner) {
-        this.apartmentDetails = apartmentDetails;
-        this.apartmentDescription = apartmentDescription;
-        this.owner = owner;
-    }
-
     public Apartment() {
     }
 

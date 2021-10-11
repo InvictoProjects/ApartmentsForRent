@@ -27,13 +27,17 @@ public class ApartmentServiceImpl implements ApartmentService {
 
     @Override
     public Apartment create(ApartmentDetails apartmentDetails, ApartmentDescription apartmentDescription, Owner owner) {
-        Apartment apartment = new Apartment(apartmentDetails, apartmentDescription, owner);
+        Apartment apartment = new Apartment.Builder()
+                .setApartmentDetails(apartmentDetails)
+                .setApartmentDescription(apartmentDescription)
+                .setOwner(owner)
+                .build();
         return apartmentRepository.save(apartment);
     }
 
     @Override
     public Apartment update(Apartment apartment) {
-        if(!apartmentRepository.existsById(apartment.getId())) {
+        if (!apartmentRepository.existsById(apartment.getId())) {
             throw new IllegalArgumentException(String.format("Apartment with id %s does not exist", apartment.getId()));
         }
         return apartmentRepository.save(apartment);
