@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="#{register.title}">Sign up</title>
+    <title>Sign up</title>
     <link rel="stylesheet" href="/styles/register.css">
 </head>
 <body>
@@ -12,14 +12,14 @@
     <div class="container-fluid">
         <div class="block">
             <div class="block-wrap">
-                <h2>Do great things</h2>
-                <p class="main__subtitle" >Your apartment</p>
+                <h2>Rent out</h2>
+                <p class="main__subtitle" >Your apartment is valuable</p>
 
                 <form th:action="@{/signup}" th:object="${owner}" method="post">
                     <input type="text" class="main__input__email" th:field="*{name}"  placeholder="Name" required>
                     <input type="text" class="main__input__email" th:field="*{surname}"  placeholder="Surname" required>
                     <input type="email" class="main__input__email" th:field="*{email}"  placeholder="Email" required>
-                    <input type="text" class="main__input__email" th:field="*{phone}"  placeholder="Phone" required>
+                    <input type="text" class="main__input__email" th:field="*{phoneNumber}"  placeholder="Phone" required>
                     <div th:if="${#fields.hasErrors('global')}" th:errors="*{global}" class="error-email-text" >Global error</div>
                     <input type="password" class="main__password" th:field="*{password}" th:placeholder="Password" minlength="6" required >
                     <button type="submit" id="register-button" >Sign up</button>
