@@ -18,5 +18,9 @@ public class ConverterConfiguration {
     @Bean
     public ApartmentDescriptionDtoConverter apartmentDescriptionDtoConverter() {
         return new ApartmentDescriptionDtoConverter();
+
+    @Bean()
+    public OwnerDtoConverter ownerDtoConverter() {
+        return new OwnerDtoConverter();
     }
 }
