@@ -85,18 +85,19 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
     }
 
     @Override
-    public Optional<Apartment> save(Apartment apartment) {
-        apartment.setId(index);
-        if (databaseMap.containsKey(index)) {
-            return Optional.empty();
+    public Apartment save(Apartment apartment) {
+        if (apartment.getId() != null) {
+            databaseMap.put(apartment.getId(), apartment);
+        } else {
+            apartment.setId(index);
+            databaseMap.put(index, apartment);
+            index++;
         }
-        databaseMap.put(index, apartment);
-        index++;
-        return Optional.of(apartment);
+        return apartment;
     }
 
     @Override
-    public Optional<Apartment> findById(long id) {
+    public Optional<Apartment> findById(Long id) {
         Apartment found = databaseMap.get(id);
         if (found == null) {
             return Optional.empty();
@@ -105,9 +106,18 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
     }
 
     @Override
-    public boolean delete(Apartment apartment) {
-        Apartment removed = databaseMap.remove(apartment.getId());
-        return removed != null;
+    public boolean existsById(Long id) {
+        return databaseMap.containsKey(id);
+    }
+
+    @Override
+    public Iterable<Apartment> findAll() {
+        return databaseMap.values();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        databaseMap.remove(id);
     }
 
     @Override

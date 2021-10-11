@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.Year;
 
 public class ApartmentDetails {
-    private long id;
+    private Long id;
     private String address;
     private Year buildYear;
     private BigDecimal price;
@@ -25,7 +25,7 @@ public class ApartmentDetails {
     }
 
     public static class Builder {
-        private long id;
+        private Long id;
         private String address;
         private Year buildYear;
         private BigDecimal price;
@@ -33,7 +33,7 @@ public class ApartmentDetails {
         private float area;
         private int quantityOfRooms;
 
-        public Builder setId(long id) {
+        public Builder setId(Long id) {
             this.id = id;
             return this;
         }
@@ -83,11 +83,11 @@ public class ApartmentDetails {
         this.quantityOfRooms = builder.quantityOfRooms;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

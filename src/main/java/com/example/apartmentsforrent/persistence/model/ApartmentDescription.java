@@ -1,7 +1,7 @@
 package com.example.apartmentsforrent.persistence.model;
 
 public class ApartmentDescription {
-    private long id;
+    private Long id;
     private String condition;
     private String buildingType;
     private String additionalInfo;
@@ -16,12 +16,12 @@ public class ApartmentDescription {
     }
 
     public static class Builder {
-        private long id;
+        private Long id;
         private String condition;
         private String buildingType;
         private String additionalInfo;
 
-        public Builder setId(long id) {
+        public Builder setId(Long id) {
             this.id = id;
             return this;
         }
@@ -53,11 +53,11 @@ public class ApartmentDescription {
         this.condition = builder.condition;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
