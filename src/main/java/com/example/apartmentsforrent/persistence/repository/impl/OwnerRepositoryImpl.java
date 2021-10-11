@@ -17,7 +17,7 @@ public class OwnerRepositoryImpl implements OwnerRepository {
     @PostConstruct
     public void populateDb() {
         Owner owner1 = new Owner();
-        owner1.setId(1);
+        owner1.setId(1L);
         owner1.setName("Michael");
         owner1.setSurname("Jackson");
         owner1.setEmail("jackson@gmail.com");
@@ -25,7 +25,7 @@ public class OwnerRepositoryImpl implements OwnerRepository {
         owner1.setPasswordHash("jdiJdflJSdfnG");
 
         Owner owner2 = new Owner();
-        owner2.setId(2);
+        owner2.setId(2L);
         owner2.setName("Johny");
         owner2.setSurname("Depp");
         owner2.setEmail("depp@gmail.com");

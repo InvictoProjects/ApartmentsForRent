@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apartment</title>
+</head>
+<body>
+<div th:object="${apartment}">
+    <h1>Apartment</h1>
+    <h2>Owner: <span th:text="${apartment.owner.name}"></span> <span th:text="${apartment.owner.surname}"></span></h2>
+    <h3>Email: <span th:text="${apartment.owner.email}"></span></h3>
+    <h3>Phone number: <span th:text="${apartment.owner.phoneNumber}"></span></h3>
+    <br>
+    <h2>Address: <span th:text="${apartment.apartmentDetails.address}"></span></h2>
+    <h2>Area: <span th:text="${apartment.apartmentDetails.area}"></span></h2>
+    <h3>Quantity of rooms: <span th:text="${apartment.apartmentDetails.quantityOfRooms}"></span></h3>
+    <h3>Floor: <span th:text="${apartment.apartmentDetails.floor}"></span></h3>
+    <h3>Build year: <span th:text="${apartment.apartmentDetails.buildYear}"></span></h3>
+    <h3>Price: <span th:text="${apartment.apartmentDetails.price}"></span></h3>
+    <br>
+    <h3>Condition: <span th:text="${apartment.apartmentDescription.condition}"></span></h3>
+    <h3>Building type: <span th:text="${apartment.apartmentDescription.buildingType}"></span></h3>
+    <h3>Addtional info: <span th:text="${apartment.apartmentDescription.additionalInfo}"></span></h3>
+</div>
+</body>
+</html>
