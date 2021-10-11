@@ -16,12 +16,7 @@ import java.util.List;
 @Controller
 public class SearchController {
 
-    private final ApartmentService apartmentService;
-
-    @Autowired
-    public SearchController(ApartmentService apartmentService) {
-        this.apartmentService = apartmentService;
-    }
+    @Autowired private ApartmentService apartmentService;
 
     @GetMapping("/search")
     public String getSearchPage() {
