@@ -38,21 +38,37 @@ public class OwnerRepositoryImpl implements OwnerRepository {
     }
 
     @Override
-    public void saveOwner(Owner owner) {
+    public Optional<Owner> getOwnerByEmail(String email) {
+        return db.values().stream().filter(owner -> owner.getEmail().equals(email)).findFirst();
+    }
+
+    @Override
+    public Owner save(Owner owner) {
         if (db.containsKey(owner.getId())) {
             db.replace(owner.getId(), owner);
         } else {
             db.put(index++, owner);
         }
+        return owner;
     }
 
     @Override
-    public Optional<Owner> getOwnerById(long id) {
+    public Optional<Owner> findById(Long id) {
         return Optional.ofNullable(db.get(id));
     }
 
     @Override
-    public Optional<Owner> getOwnerByEmail(String email) {
-        return db.values().stream().filter(owner -> owner.getEmail().equals(email)).findFirst();
+    public boolean existsById(Long id) {
+        return Optional.ofNullable(db.get(id)).isPresent();
+    }
+
+    @Override
+    public Iterable<Owner> findAll() {
+        return db.values();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        db.remove(id);
     }
 }
