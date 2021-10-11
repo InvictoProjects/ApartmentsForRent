@@ -32,4 +32,14 @@ public class OwnerController {
         ownerService.saveOwner(owner);
         return "redirect:/";
     }
+
+    @GetMapping("/signin")
+    public String getSignInPage() {
+        return "signin";
+    }
+
+    @PostMapping("/signin")
+    public String authenticateUser() {
+        return "redirect:/";
+    }
 }

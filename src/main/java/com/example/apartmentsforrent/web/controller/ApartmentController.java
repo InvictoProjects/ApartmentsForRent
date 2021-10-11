@@ -5,10 +5,12 @@ import com.example.apartmentsforrent.persistence.model.ApartmentDescription;
 import com.example.apartmentsforrent.persistence.model.ApartmentDetails;
 import com.example.apartmentsforrent.persistence.model.Owner;
 import com.example.apartmentsforrent.service.ApartmentService;
+import com.example.apartmentsforrent.web.converter.ApartmentConverter;
 import com.example.apartmentsforrent.web.converter.ApartmentDescriptionDtoConverter;
 import com.example.apartmentsforrent.web.converter.ApartmentDetailsDtoConverter;
 import com.example.apartmentsforrent.web.dto.ApartmentDescriptionDto;
 import com.example.apartmentsforrent.web.dto.ApartmentDetailsDto;
+import com.example.apartmentsforrent.web.dto.ApartmentDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +21,16 @@ public class ApartmentController {
     private final ApartmentService apartmentService;
     private final ApartmentDetailsDtoConverter apartmentDetailsDtoConverter;
     private final ApartmentDescriptionDtoConverter apartmentDescriptionDtoConverter;
+    private final ApartmentConverter apartmentConverter;
 
-    public ApartmentController(ApartmentService apartmentService, ApartmentDetailsDtoConverter apartmentDetailsDtoConverter, ApartmentDescriptionDtoConverter apartmentDescriptionDtoConverter) {
+    public ApartmentController(ApartmentService apartmentService,
+                               ApartmentDetailsDtoConverter apartmentDetailsDtoConverter,
+                               ApartmentDescriptionDtoConverter apartmentDescriptionDtoConverter,
+                               ApartmentConverter apartmentConverter) {
         this.apartmentService = apartmentService;
         this.apartmentDetailsDtoConverter = apartmentDetailsDtoConverter;
         this.apartmentDescriptionDtoConverter = apartmentDescriptionDtoConverter;
+        this.apartmentConverter = apartmentConverter;
     }
 
     @GetMapping("/create")
@@ -71,5 +78,12 @@ public class ApartmentController {
     public String deleteApartment(@RequestParam Long id) {
         apartmentService.deleteById(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/{id}")
+    public String getApartmentPage(@PathVariable Long id, Model model) {
+        ApartmentDto apartmentDto = apartmentConverter.convertToApartmentDto(apartmentService.findById(id).orElseThrow());
+        model.addAttribute("apartment", apartmentDto);
+        return "apartment";
     }
 }
