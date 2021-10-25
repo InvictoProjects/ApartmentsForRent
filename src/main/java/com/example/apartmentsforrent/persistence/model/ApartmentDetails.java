@@ -15,15 +15,6 @@ public class ApartmentDetails {
     public ApartmentDetails() {
     }
 
-    public ApartmentDetails(String address, Year buildYear, BigDecimal price, int floor, float area, int quantityOfRooms) {
-        this.address = address;
-        this.buildYear = buildYear;
-        this.price = price;
-        this.floor = floor;
-        this.area = area;
-        this.quantityOfRooms = quantityOfRooms;
-    }
-
     public static class Builder {
         private Long id;
         private String address;

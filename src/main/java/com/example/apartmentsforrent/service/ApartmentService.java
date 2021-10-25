@@ -12,10 +12,15 @@ import java.util.Optional;
 
 public interface ApartmentService {
     Apartment create(ApartmentDetails apartmentDetails, ApartmentDescription apartmentDescription, Owner owner);
+
     Apartment update(Apartment apartment);
+
     void deleteById(Long id);
+
     Optional<Apartment> findById(Long id);
+
     List<Apartment> findAll();
+
     List<Apartment> search(BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom, Integer quantityOfRoomsTo,
                            Float areaFrom, Float areaTo, Integer floorFrom, Integer floorTo, Year yearOfBuildFrom,
                            Year yearOfBuildTo);

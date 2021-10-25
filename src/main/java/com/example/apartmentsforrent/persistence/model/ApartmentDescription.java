@@ -6,12 +6,6 @@ public class ApartmentDescription {
     private BuildingType buildingType;
     private String additionalInfo;
 
-    public ApartmentDescription(String condition, BuildingType buildingType, String additionalInfo) {
-        this.condition = condition;
-        this.buildingType = buildingType;
-        this.additionalInfo = additionalInfo;
-    }
-
     public ApartmentDescription() {
     }
 

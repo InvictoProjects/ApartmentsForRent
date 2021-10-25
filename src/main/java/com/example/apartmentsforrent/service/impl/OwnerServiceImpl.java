@@ -17,12 +17,12 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public void saveOwner(Owner owner) {
-        ownerRepository.saveOwner(owner);
+        ownerRepository.save(owner);
     }
 
     @Override
     public Optional<Owner> getOwnerById(long id) {
-        return ownerRepository.getOwnerById(id);
+        return ownerRepository.findById(id);
     }
 
     @Override

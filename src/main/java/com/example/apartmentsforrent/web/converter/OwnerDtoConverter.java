@@ -6,13 +6,12 @@ import com.example.apartmentsforrent.web.dto.OwnerDto;
 public class OwnerDtoConverter {
 
     public Owner convertToOwner(OwnerDto ownerDto) {
-        Owner owner = new Owner();
-        owner.setEmail(ownerDto.getEmail());
-        owner.setName(ownerDto.getName());
-        owner.setSurname(ownerDto.getSurname());
-        owner.setPhoneNumber(ownerDto.getPhoneNumber());
-        owner.setPasswordHash(ownerDto.getPassword());
-
-        return owner;
+        return new Owner.Builder()
+                .setEmail(ownerDto.getEmail())
+                .setName(ownerDto.getName())
+                .setSurname(ownerDto.getSurname())
+                .setPhoneNumber(ownerDto.getPhoneNumber())
+                .setPasswordHash(ownerDto.getPassword())
+                .build();
     }
 }

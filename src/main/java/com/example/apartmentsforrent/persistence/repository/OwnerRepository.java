@@ -4,8 +4,6 @@ import com.example.apartmentsforrent.persistence.model.Owner;
 
 import java.util.Optional;
 
-public interface OwnerRepository {
-    void saveOwner(Owner owner);
-    Optional<Owner> getOwnerById(long id);
+public interface OwnerRepository extends CrudRepository<Owner, Long> {
     Optional<Owner> getOwnerByEmail(String email);
 }

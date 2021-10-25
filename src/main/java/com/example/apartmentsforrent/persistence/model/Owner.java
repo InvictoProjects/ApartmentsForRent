@@ -8,14 +8,6 @@ public class Owner {
     private String phoneNumber;
     private String passwordHash;
 
-    public Owner(String name, String surname, String email, String phoneNumber, String passwordHash) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.passwordHash = passwordHash;
-    }
-
     public Owner() {
     }
 
