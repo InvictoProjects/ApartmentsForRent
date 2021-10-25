@@ -34,9 +34,11 @@
                 <div class="input-box">
                     <input type="text" th:field="*{condition}" id="condition" placeholder="Condition"/>
                 </div>
-                <div class="input-box">
-                    <input type="text" th:field="*{buildingType}" id="buildingType" placeholder="Building Type"/>
-                </div>
+                <select name="buildingType">
+                    <option value="none" selected disabled hidden>Building type</option>
+                    <option th:each="buildingTypeOpt : ${T(com.example.apartmentsforrent.persistence.model.BuildingType).values()}"
+                            th:value="${buildingTypeOpt}" th:text="${buildingTypeOpt.displayValue}"></option>
+                </select>
                 <div class="input-box">
                     <input type="text" th:field="*{additionalInfo}" id="additionalInfo" placeholder="Additional Info"/>
                 </div>
