@@ -13,7 +13,7 @@
         <div class="block">
             <div class="block-wrap">
                 <h2>Sign in</h2>
-                <p class="main__subtitle">Fields are case sensitive</p>
+                <p class="main__subtitle" th:text="${param.error} ? 'Check your credentials' : 'Fields are case sensitive'"></p>
 
                 <form th:action="@{/signin}" method="post">
                     <input type="email" class="main__input__email input" name="username" placeholder="Email"
