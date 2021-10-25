@@ -3,10 +3,10 @@ package com.example.apartmentsforrent.persistence.model;
 public class ApartmentDescription {
     private Long id;
     private String condition;
-    private String buildingType;
+    private BuildingType buildingType;
     private String additionalInfo;
 
-    public ApartmentDescription(String condition, String buildingType, String additionalInfo) {
+    public ApartmentDescription(String condition, BuildingType buildingType, String additionalInfo) {
         this.condition = condition;
         this.buildingType = buildingType;
         this.additionalInfo = additionalInfo;
@@ -18,7 +18,7 @@ public class ApartmentDescription {
     public static class Builder {
         private Long id;
         private String condition;
-        private String buildingType;
+        private BuildingType buildingType;
         private String additionalInfo;
 
         public Builder setId(Long id) {
@@ -31,7 +31,7 @@ public class ApartmentDescription {
             return this;
         }
 
-        public Builder setBuildingType(String buildingType) {
+        public Builder setBuildingType(BuildingType buildingType) {
             this.buildingType = buildingType;
             return this;
         }
@@ -69,11 +69,11 @@ public class ApartmentDescription {
         this.condition = condition;
     }
 
-    public String getBuildingType() {
+    public BuildingType getBuildingType() {
         return buildingType;
     }
 
-    public void setBuildingType(String buildingType) {
+    public void setBuildingType(BuildingType buildingType) {
         this.buildingType = buildingType;
     }
 

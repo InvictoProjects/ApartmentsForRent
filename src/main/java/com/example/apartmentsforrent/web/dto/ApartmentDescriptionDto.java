@@ -1,11 +1,13 @@
 package com.example.apartmentsforrent.web.dto;
 
+import com.example.apartmentsforrent.persistence.model.BuildingType;
+
 public class ApartmentDescriptionDto {
     private String condition;
-    private String buildingType;
+    private BuildingType buildingType;
     private String additionalInfo;
 
-    public ApartmentDescriptionDto(String condition, String buildingType, String additionalInfo) {
+    public ApartmentDescriptionDto(String condition, BuildingType buildingType, String additionalInfo) {
         this.condition = condition;
         this.buildingType = buildingType;
         this.additionalInfo = additionalInfo;
@@ -22,11 +24,11 @@ public class ApartmentDescriptionDto {
         this.condition = condition;
     }
 
-    public String getBuildingType() {
+    public BuildingType getBuildingType() {
         return buildingType;
     }
 
-    public void setBuildingType(String buildingType) {
+    public void setBuildingType(BuildingType buildingType) {
         this.buildingType = buildingType;
     }
 
