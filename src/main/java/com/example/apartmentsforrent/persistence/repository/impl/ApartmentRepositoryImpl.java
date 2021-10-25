@@ -1,10 +1,7 @@
 package com.example.apartmentsforrent.persistence.repository.impl;
 
 import com.example.apartmentsforrent.persistence.Checker;
-import com.example.apartmentsforrent.persistence.model.Apartment;
-import com.example.apartmentsforrent.persistence.model.ApartmentDescription;
-import com.example.apartmentsforrent.persistence.model.ApartmentDetails;
-import com.example.apartmentsforrent.persistence.model.Owner;
+import com.example.apartmentsforrent.persistence.model.*;
 import com.example.apartmentsforrent.persistence.repository.ApartmentRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
@@ -39,13 +36,13 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
                 .build();
 
         ApartmentDescription description1 = new ApartmentDescription.Builder()
-                .setBuildingType("Some type")
+                .setBuildingType(BuildingType.BRICK)
                 .setCondition("Some condition")
                 .setAdditionalInfo("Additional information")
                 .build();
 
         ApartmentDescription description2 = new ApartmentDescription.Builder()
-                .setBuildingType("Some type2")
+                .setBuildingType(BuildingType.PANEL)
                 .setCondition("Some condition2")
                 .setAdditionalInfo("Additional information2")
                 .build();

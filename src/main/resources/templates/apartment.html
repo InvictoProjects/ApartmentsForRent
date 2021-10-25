@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apartment</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartment</title>
 </head>
 <body>
 <div th:object="${apartment}">
@@ -21,7 +21,20 @@
     <h3>Price: <span th:text="${apartment.apartmentDetails.price}"></span></h3>
     <br>
     <h3>Condition: <span th:text="${apartment.apartmentDescription.condition}"></span></h3>
-    <h3>Building type: <span th:text="${apartment.apartmentDescription.buildingType}"></span></h3>
+    <h3 th:switch="${apartment.getApartmentDescription().buildingType}">Building type:
+        <span th:case="${T(com.example.apartmentsforrent.persistence.model.BuildingType).BRICK}">
+            Built of common(burnt clay) bricks</span>
+        <span th:case="${T(com.example.apartmentsforrent.persistence.model.BuildingType).FRAME}">
+            Framed(built of wooden frame sheathed by plywood or OSB-boards)</span>
+        <span th:case="${T(com.example.apartmentsforrent.persistence.model.BuildingType).SILICATE_BRICK}">
+            Built of calcium-silicate(sand-lime) bricks</span>
+        <span th:case="${T(com.example.apartmentsforrent.persistence.model.BuildingType).PANEL}">
+            Panel(built of pre-fabricated concrete blocks)</span>
+        <span th:case="${T(com.example.apartmentsforrent.persistence.model.BuildingType).FOAM_BLOCK}">
+            Built of foam blocks(building material made from foam concrete)</span>
+        <span th:case="${T(com.example.apartmentsforrent.persistence.model.BuildingType).MONOLITH}">
+            Built of monolithic reinforced concrete</span>
+    </h3>
     <h3>Addtional info: <span th:text="${apartment.apartmentDescription.additionalInfo}"></span></h3>
 </div>
 </body>
