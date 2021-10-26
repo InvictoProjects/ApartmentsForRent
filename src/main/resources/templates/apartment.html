@@ -18,7 +18,7 @@
     <h3>Quantity of rooms: <span th:text="${apartment.apartmentDetails.quantityOfRooms}"></span></h3>
     <h3>Floor: <span th:text="${apartment.apartmentDetails.floor}"></span></h3>
     <h3>Build year: <span th:text="${apartment.apartmentDetails.buildYear}"></span></h3>
-    <h3>Price: <span th:text="${apartment.apartmentDetails.price}"></span></h3>
+    <h3>Price: <span th:text="${apartment.apartmentDetails.price} ?: 'No price added by owner'"></span></h3>
     <br>
     <h3>Condition: <span th:text="${apartment.apartmentDescription.condition}"></span></h3>
     <h3 th:switch="${apartment.getApartmentDescription().buildingType}">Building type:
