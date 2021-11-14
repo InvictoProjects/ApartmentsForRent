@@ -20,6 +20,7 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
     @PostConstruct
     private void createDatabase() {
         Owner owner1 = new Owner.Builder()
+                .setId(1L)
                 .setName("Name1")
                 .setSurname("Surname1")
                 .setEmail("owner1@hazain.com")
@@ -28,6 +29,7 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
                 .build();
 
         Owner owner2 = new Owner.Builder()
+                .setId(2L)
                 .setName("Name2")
                 .setSurname("Surname2")
                 .setEmail("owner2@hazain.com")
@@ -36,18 +38,21 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
                 .build();
 
         ApartmentDescription description1 = new ApartmentDescription.Builder()
+                .setId(1L)
                 .setBuildingType(BuildingType.BRICK)
                 .setCondition("Some condition")
                 .setAdditionalInfo("Additional information")
                 .build();
 
         ApartmentDescription description2 = new ApartmentDescription.Builder()
+                .setId(2L)
                 .setBuildingType(BuildingType.PANEL)
                 .setCondition("Some condition2")
                 .setAdditionalInfo("Additional information2")
                 .build();
 
         ApartmentDetails details1 = new ApartmentDetails.Builder()
+                .setId(1L)
                 .setAddress("St. Peremohy, bldg. 12")
                 .setBuildYear(Year.of(2012))
                 .setPrice(new BigDecimal("70000.50"))
@@ -57,6 +62,7 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
                 .build();
 
         ApartmentDetails details2 = new ApartmentDetails.Builder()
+                .setId(2L)
                 .setAddress("Sq. Troyana, bldg. 32")
                 .setBuildYear(Year.of(2019))
                 .setPrice(new BigDecimal("1170000.50"))
@@ -66,12 +72,14 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
                 .build();
 
         Apartment apartment1 = new Apartment.Builder()
+                .setId(1L)
                 .setOwner(owner1)
                 .setApartmentDetails(details1)
                 .setApartmentDescription(description1)
                 .build();
 
         Apartment apartment2 = new Apartment.Builder()
+                .setId(2L)
                 .setOwner(owner2)
                 .setApartmentDetails(details2)
                 .setApartmentDescription(description2)
@@ -113,15 +121,16 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
-        databaseMap.remove(id);
+    public void delete(Apartment apartment) {
+        databaseMap.remove(apartment.getId());
     }
 
     @Override
-    public List<Apartment> search(BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom,
-                                  Integer quantityOfRoomsTo, Float areaFrom, Float areaTo, Integer floorFrom,
-                                  Integer floorTo, Year yearOfBuildFrom, Year yearOfBuildTo) {
+    public List<Apartment> getAllWithFiltering(int page, int size, BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom,
+                                               Integer quantityOfRoomsTo, Float areaFrom, Float areaTo, Integer floorFrom,
+                                               Integer floorTo, Year yearOfBuildFrom, Year yearOfBuildTo) {
         List<Apartment> apartments = new ArrayList<>();
+        int apartmentsToSkip = (page-1)*size;
         for (Map.Entry<Long, Apartment> entry : databaseMap.entrySet()) {
             Apartment apartmentI = entry.getValue();
 
@@ -139,7 +148,15 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
                     apartmentI.getApartmentDetails().getBuildYear(), Year.of(0));
 
             if (isPriceSuitable && isQuantityOfRoomsSuitable && isAreaSuitable && isFloorSuitable && isYearOfBuildSuitable) {
-                apartments.add(apartmentI);
+                if (apartmentsToSkip > 0) {
+                    apartmentsToSkip--;
+                } else {
+                    if (apartments.size() < size) {
+                        apartments.add(apartmentI);
+                    } else {
+                        break;
+                    }
+                }
             }
         }
         return apartments;

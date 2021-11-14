@@ -70,7 +70,7 @@ public class OwnerRepositoryImpl implements OwnerRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
-        db.remove(id);
+    public void delete(Owner owner) {
+        db.remove(owner.getId());
     }
 }

@@ -7,5 +7,5 @@ public interface CrudRepository<T, I> {
     Optional<T> findById(I id);
     boolean existsById(I id);
     Iterable<T> findAll();
-    void deleteById(I id);
+    void delete(T entity);
 }

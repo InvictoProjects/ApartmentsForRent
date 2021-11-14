@@ -41,7 +41,7 @@ public class ApartmentDescriptionRepositoryImpl implements ApartmentDescriptionR
     }
 
     @Override
-    public void deleteById(Long id) {
-        databaseMap.remove(id);
+    public void delete(ApartmentDescription apartmentDescription) {
+        databaseMap.remove(apartmentDescription.getId());
     }
 }

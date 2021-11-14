@@ -15,13 +15,13 @@ public interface ApartmentService {
 
     Apartment update(Apartment apartment);
 
-    void deleteById(Long id);
+    void delete(Apartment apartment);
 
     Optional<Apartment> findById(Long id);
 
     List<Apartment> findAll();
 
-    List<Apartment> search(BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom, Integer quantityOfRoomsTo,
-                           Float areaFrom, Float areaTo, Integer floorFrom, Integer floorTo, Year yearOfBuildFrom,
-                           Year yearOfBuildTo);
+    List<Apartment> getAllWithFiltering(int page, int size, BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom,
+                                        Integer quantityOfRoomsTo, Float areaFrom, Float areaTo, Integer floorFrom, Integer floorTo,
+                                        Year yearOfBuildFrom, Year yearOfBuildTo);
 }
