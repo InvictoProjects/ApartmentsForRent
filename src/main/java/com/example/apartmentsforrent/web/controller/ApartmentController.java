@@ -41,15 +41,12 @@ public class ApartmentController {
     @GetMapping
     public ResponseEntity<List<ApartmentDto>> listAll(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
         if (page != null && size != null) {
-            try {
-                return ResponseEntity.ok(apartmentService
-                        .findAll(page, size)
-                        .stream()
-                        .map(apartmentConverter::convertToApartmentDto)
-                        .collect(Collectors.toList()));
-            } catch (IndexOutOfBoundsException e) {
-                return ResponseEntity.badRequest().build();
-            }
+            if (page <= 0 || size <= 0) return ResponseEntity.badRequest().build();
+            return ResponseEntity.ok(apartmentService
+                    .findAll(page, size)
+                    .stream()
+                    .map(apartmentConverter::convertToApartmentDto)
+                    .collect(Collectors.toList()));
         } else if (page == null && size == null) {
             return ResponseEntity.ok(apartmentService
                     .findAll()
