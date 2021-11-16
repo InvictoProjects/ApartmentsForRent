@@ -11,4 +11,5 @@ public interface ApartmentRepository extends CrudRepository<Apartment, Long> {
                            Float areaFrom, Float areaTo, Integer floorFrom, Integer floorTo, Year yearOfBuildFrom,
                            Year yearOfBuildTo);
 
+    List<Apartment> findAll(int page, int size);
 }
