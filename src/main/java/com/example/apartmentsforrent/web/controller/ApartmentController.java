@@ -5,13 +5,10 @@ import com.example.apartmentsforrent.persistence.model.ApartmentDescription;
 import com.example.apartmentsforrent.persistence.model.ApartmentDetails;
 import com.example.apartmentsforrent.service.ApartmentService;
 import com.example.apartmentsforrent.web.converter.ApartmentConverter;
-import com.example.apartmentsforrent.web.converter.ApartmentDescriptionDtoConverter;
-import com.example.apartmentsforrent.web.converter.ApartmentDetailsDtoConverter;
 import com.example.apartmentsforrent.web.converter.ApartmentDtoConverter;
 import com.example.apartmentsforrent.web.dto.ApartmentDescriptionDto;
 import com.example.apartmentsforrent.web.dto.ApartmentDetailsDto;
 import com.example.apartmentsforrent.web.dto.ApartmentDto;
-import com.example.apartmentsforrent.web.dto.OwnerDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,18 +21,13 @@ import java.util.stream.Collectors;
 @RequestMapping("apartments")
 public class ApartmentController {
     private final ApartmentService apartmentService;
-    private final ApartmentDetailsDtoConverter apartmentDetailsDtoConverter;
-    private final ApartmentDescriptionDtoConverter apartmentDescriptionDtoConverter;
     private final ApartmentConverter apartmentConverter;
     private final ApartmentDtoConverter apartmentDtoConverter;
 
     public ApartmentController(ApartmentService apartmentService,
-                               ApartmentDetailsDtoConverter apartmentDetailsDtoConverter,
-                               ApartmentDescriptionDtoConverter apartmentDescriptionDtoConverter,
-                               ApartmentConverter apartmentConverter, ApartmentDtoConverter apartmentDtoConverter) {
+                               ApartmentConverter apartmentConverter,
+                               ApartmentDtoConverter apartmentDtoConverter) {
         this.apartmentService = apartmentService;
-        this.apartmentDetailsDtoConverter = apartmentDetailsDtoConverter;
-        this.apartmentDescriptionDtoConverter = apartmentDescriptionDtoConverter;
         this.apartmentConverter = apartmentConverter;
         this.apartmentDtoConverter = apartmentDtoConverter;
     }
