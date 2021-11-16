@@ -11,13 +11,11 @@ import com.example.apartmentsforrent.web.dto.ApartmentDescriptionDto;
 import com.example.apartmentsforrent.web.dto.ApartmentDetailsDto;
 import com.example.apartmentsforrent.web.dto.ApartmentDto;
 import com.example.apartmentsforrent.web.dto.OwnerDto;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
