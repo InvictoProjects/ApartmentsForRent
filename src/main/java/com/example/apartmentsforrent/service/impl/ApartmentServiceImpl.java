@@ -44,11 +44,12 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        if (!apartmentRepository.existsById(id)) {
-            throw new IllegalArgumentException(String.format("Apartment with id %s does not exist", id));
+    public void delete(Apartment apartment) {
+        Long apartmentId = apartment.getId();
+        if (!apartmentRepository.existsById(apartmentId)) {
+            throw new IllegalArgumentException(String.format("Apartment with id %s does not exist", apartmentId));
         }
-        apartmentRepository.deleteById(id);
+        apartmentRepository.delete(apartment);
     }
 
     @Override
@@ -64,10 +65,10 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public List<Apartment> search(BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom,
-                                  Integer quantityOfRoomsTo, Float areaFrom, Float areaTo, Integer floorFrom,
-                                  Integer floorTo, Year yearOfBuildFrom, Year yearOfBuildTo) {
-        return apartmentRepository.search(priceFrom, priceTo, quantityOfRoomsFrom, quantityOfRoomsTo, areaFrom,
+    public List<Apartment> getAllWithFiltering(int page, int size, BigDecimal priceFrom, BigDecimal priceTo, Integer quantityOfRoomsFrom,
+                                               Integer quantityOfRoomsTo, Float areaFrom, Float areaTo, Integer floorFrom,
+                                               Integer floorTo, Year yearOfBuildFrom, Year yearOfBuildTo) {
+        return apartmentRepository.getAllWithFiltering(page, size, priceFrom, priceTo, quantityOfRoomsFrom, quantityOfRoomsTo, areaFrom,
                 areaTo, floorFrom, floorTo, yearOfBuildFrom, yearOfBuildTo);
     }
 }
