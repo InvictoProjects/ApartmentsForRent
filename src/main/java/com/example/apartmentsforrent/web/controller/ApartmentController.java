@@ -12,10 +12,12 @@ import com.example.apartmentsforrent.web.dto.ApartmentDetailsDto;
 import com.example.apartmentsforrent.web.dto.ApartmentDto;
 import com.example.apartmentsforrent.web.dto.OwnerDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,32 +36,33 @@ public class ApartmentController {
     }
 
     @GetMapping
-    public List<ApartmentDto> listAll(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+    public ResponseEntity<List<ApartmentDto>> listAll(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
         if (page != null && size != null) {
             try {
-                return apartmentService
+                return ResponseEntity.ok(apartmentService
                         .findAll(page, size)
                         .stream()
                         .map(apartmentConverter::convertToApartmentDto)
-                        .collect(Collectors.toList());
+                        .collect(Collectors.toList()));
             } catch (IndexOutOfBoundsException e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+                return ResponseEntity.badRequest().build();
             }
         } else if (page == null && size == null) {
-            return apartmentService
+            return ResponseEntity.ok(apartmentService
                     .findAll()
                     .stream()
                     .map(apartmentConverter::convertToApartmentDto)
-                    .collect(Collectors.toList());
-        } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+                    .collect(Collectors.toList()));
+        } else return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/{id}")
-    public ApartmentDto getApartment(@PathVariable Long id) {
-        Apartment apartment = apartmentService.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
-        );
-        return apartmentConverter.convertToApartmentDto(apartment);
+    public ResponseEntity<ApartmentDto> getApartment(@PathVariable Long id) {
+        Optional<Apartment> apartment = apartmentService.findById(id);
+        if (apartment.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(apartmentConverter.convertToApartmentDto(apartment.get()));
     }
 
     @PostMapping
