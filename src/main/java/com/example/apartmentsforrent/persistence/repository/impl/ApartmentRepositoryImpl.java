@@ -121,6 +121,12 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
     }
 
     @Override
+    public List<Apartment> findAll(int page, int size) {
+        List<Apartment> apartments = new ArrayList<>(databaseMap.values());
+        return apartments.subList((page - 1) * size, page * size);
+    }
+
+    @Override
     public void delete(Apartment apartment) {
         databaseMap.remove(apartment.getId());
     }

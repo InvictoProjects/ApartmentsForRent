@@ -1,15 +1,11 @@
 package com.example.apartmentsforrent.web.dto;
 
-import com.example.apartmentsforrent.persistence.model.ApartmentDescription;
-import com.example.apartmentsforrent.persistence.model.ApartmentDetails;
-import com.example.apartmentsforrent.persistence.model.Owner;
-
 public class ApartmentDto {
-    private ApartmentDetails apartmentDetails;
-    private ApartmentDescription apartmentDescription;
-    private Owner owner;
+    private ApartmentDetailsDto apartmentDetails;
+    private ApartmentDescriptionDto apartmentDescription;
+    private OwnerDto owner;
 
-    public ApartmentDto(ApartmentDetails apartmentDetails, ApartmentDescription apartmentDescription, Owner owner) {
+    public ApartmentDto(ApartmentDetailsDto apartmentDetails, ApartmentDescriptionDto apartmentDescription, OwnerDto owner) {
         this.apartmentDetails = apartmentDetails;
         this.apartmentDescription = apartmentDescription;
         this.owner = owner;
@@ -18,27 +14,27 @@ public class ApartmentDto {
     public ApartmentDto() {
     }
 
-    public ApartmentDetails getApartmentDetails() {
+    public ApartmentDetailsDto getApartmentDetails() {
         return apartmentDetails;
     }
 
-    public void setApartmentDetails(ApartmentDetails apartmentDetails) {
+    public void setApartmentDetails(ApartmentDetailsDto apartmentDetails) {
         this.apartmentDetails = apartmentDetails;
     }
 
-    public ApartmentDescription getApartmentDescription() {
+    public ApartmentDescriptionDto getApartmentDescription() {
         return apartmentDescription;
     }
 
-    public void setApartmentDescription(ApartmentDescription apartmentDescription) {
+    public void setApartmentDescription(ApartmentDescriptionDto apartmentDescription) {
         this.apartmentDescription = apartmentDescription;
     }
 
-    public Owner getOwner() {
+    public OwnerDto getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
+    public void setOwner(OwnerDto owner) {
         this.owner = owner;
     }
 }
