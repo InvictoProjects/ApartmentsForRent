@@ -101,14 +101,17 @@ public class ApartmentController {
             if (patchDetails.getPrice() != null) oldDetails.setPrice(patchDetails.getPrice());
             if (patchDetails.getFloor() != 0) oldDetails.setFloor(patchDetails.getFloor());
             if (patchDetails.getArea() != 0) oldDetails.setArea(patchDetails.getArea());
-            if (patchDetails.getQuantityOfRooms() != 0) oldDetails.setQuantityOfRooms(patchDetails.getQuantityOfRooms());
+            if (patchDetails.getQuantityOfRooms() != 0)
+                oldDetails.setQuantityOfRooms(patchDetails.getQuantityOfRooms());
         }
         ApartmentDescriptionDto patchDescription = patch.getApartmentDescription();
         if (patchDescription != null) {
             ApartmentDescription oldDescription = apartment.getApartmentDescription();
             if (patchDescription.getCondition() != null) oldDescription.setCondition(patchDescription.getCondition());
-            if (patchDescription.getBuildingType() != null) oldDescription.setBuildingType(patchDescription.getBuildingType());
-            if (patchDescription.getAdditionalInfo() != null) oldDescription.setAdditionalInfo(patchDescription.getAdditionalInfo());
+            if (patchDescription.getBuildingType() != null)
+                oldDescription.setBuildingType(patchDescription.getBuildingType());
+            if (patchDescription.getAdditionalInfo() != null)
+                oldDescription.setAdditionalInfo(patchDescription.getAdditionalInfo());
         }
         OwnerDto patchOwner = patch.getOwner();
         if (patchOwner != null) {
@@ -143,7 +146,8 @@ public class ApartmentController {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        Optional<Apartment> optionalApartment = apartmentService.findById(id);
-        optionalApartment.ifPresent(apartmentService::delete);
+        Apartment apartment = apartmentService.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        apartmentService.delete(apartment);
     }
 }
