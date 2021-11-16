@@ -11,6 +11,7 @@ import com.example.apartmentsforrent.web.dto.ApartmentDescriptionDto;
 import com.example.apartmentsforrent.web.dto.ApartmentDetailsDto;
 import com.example.apartmentsforrent.web.dto.ApartmentDto;
 import com.example.apartmentsforrent.web.dto.OwnerDto;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,18 +36,18 @@ public class ApartmentController {
     }
 
     @GetMapping
-    public List<ApartmentDto> listAll(@RequestParam Optional<Integer> page, @RequestParam Optional<Integer> size) {
-        if (page.isPresent() && size.isPresent()) {
+    public List<ApartmentDto> listAll(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+        if (page != null && size != null) {
             try {
                 return apartmentService
-                        .findAll(page.get(), size.get())
+                        .findAll(page, size)
                         .stream()
                         .map(apartmentConverter::convertToApartmentDto)
                         .collect(Collectors.toList());
             } catch (IndexOutOfBoundsException e) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
             }
-        } else if (page.isEmpty() && size.isEmpty()) {
+        } else if (page == null && size == null) {
             return apartmentService
                     .findAll()
                     .stream()
