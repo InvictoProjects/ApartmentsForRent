@@ -72,14 +72,12 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
                 .build();
 
         Apartment apartment1 = new Apartment.Builder()
-                .setId(1L)
                 .setOwner(owner1)
                 .setApartmentDetails(details1)
                 .setApartmentDescription(description1)
                 .build();
 
         Apartment apartment2 = new Apartment.Builder()
-                .setId(2L)
                 .setOwner(owner2)
                 .setApartmentDetails(details2)
                 .setApartmentDescription(description2)
