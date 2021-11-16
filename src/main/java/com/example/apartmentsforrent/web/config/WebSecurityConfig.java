@@ -14,5 +14,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .xssProtection()
                 .and()
                 .contentSecurityPolicy("script-src 'self'");
+        http
+                .csrf().disable();
     }
 }
