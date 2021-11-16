@@ -3,12 +3,14 @@ package com.example.apartmentsforrent.web.controller;
 import com.example.apartmentsforrent.persistence.model.Apartment;
 import com.example.apartmentsforrent.persistence.model.ApartmentDescription;
 import com.example.apartmentsforrent.persistence.model.ApartmentDetails;
+import com.example.apartmentsforrent.persistence.model.Owner;
 import com.example.apartmentsforrent.service.ApartmentService;
 import com.example.apartmentsforrent.web.converter.ApartmentConverter;
 import com.example.apartmentsforrent.web.converter.ApartmentDtoConverter;
 import com.example.apartmentsforrent.web.dto.ApartmentDescriptionDto;
 import com.example.apartmentsforrent.web.dto.ApartmentDetailsDto;
 import com.example.apartmentsforrent.web.dto.ApartmentDto;
+import com.example.apartmentsforrent.web.dto.OwnerDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -102,6 +104,14 @@ public class ApartmentController {
             if (patchDescription.getCondition() != null) oldDescription.setCondition(patchDescription.getCondition());
             if (patchDescription.getBuildingType() != null) oldDescription.setBuildingType(patchDescription.getBuildingType());
             if (patchDescription.getAdditionalInfo() != null) oldDescription.setAdditionalInfo(patchDescription.getAdditionalInfo());
+        }
+        OwnerDto patchOwner = patch.getOwner();
+        if (patchOwner != null) {
+            Owner oldOwner = apartment.getOwner();
+            if (patchOwner.getName() != null) oldOwner.setName(patchOwner.getName());
+            if (patchOwner.getSurname() != null) oldOwner.setSurname(patchOwner.getSurname());
+            if (patchOwner.getEmail() != null) oldOwner.setEmail(patchOwner.getEmail());
+            if (patchOwner.getPhoneNumber() != null) oldOwner.setPhoneNumber(patchOwner.getPhoneNumber());
         }
         Apartment updatedApartment = apartmentService.update(apartment);
         return apartmentConverter.convertToApartmentDto(updatedApartment);
