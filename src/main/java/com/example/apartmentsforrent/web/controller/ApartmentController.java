@@ -56,15 +56,12 @@ public class ApartmentController {
                                                       @Parameter(description = "Size of page")
                                                       @RequestParam(required = false) Integer size) {
         if (page != null && size != null) {
-            try {
-                return ResponseEntity.ok(apartmentService
-                        .findAll(page, size)
-                        .stream()
-                        .map(apartmentConverter::convertToApartmentDto)
-                        .collect(Collectors.toList()));
-            } catch (IndexOutOfBoundsException e) {
-                return ResponseEntity.badRequest().build();
-            }
+            if (page <= 0 || size <= 0) return ResponseEntity.badRequest().build();
+            return ResponseEntity.ok(apartmentService
+                    .findAll(page, size)
+                    .stream()
+                    .map(apartmentConverter::convertToApartmentDto)
+                    .collect(Collectors.toList()));
         } else if (page == null && size == null) {
             return ResponseEntity.ok(apartmentService
                     .findAll()
@@ -196,6 +193,9 @@ public class ApartmentController {
                                      @Parameter(description = "Maximum floor") @RequestParam(required = false) Integer floorTo,
                                      @Parameter(description = "Minimum build year") @RequestParam(required = false) Year yearOfBuildFrom,
                                      @Parameter(description = "Maximum build year") @RequestParam(required = false) Year yearOfBuildTo) {
+        if (page <= 0 || size <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         return apartmentService.getAllWithFiltering(page, size, priceFrom, priceTo, quantityOfRoomsFrom, quantityOfRoomsTo,
                         areaFrom, areaTo, floorFrom, floorTo, yearOfBuildFrom, yearOfBuildTo).stream()
                 .map(apartmentConverter::convertToApartmentDto)

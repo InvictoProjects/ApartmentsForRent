@@ -121,7 +121,12 @@ public class ApartmentRepositoryImpl implements ApartmentRepository {
     @Override
     public List<Apartment> findAll(int page, int size) {
         List<Apartment> apartments = new ArrayList<>(databaseMap.values());
-        return apartments.subList((page - 1) * size, page * size);
+        if ((page - 1) * size >= apartments.size()) {
+            apartments.clear();
+            return apartments;
+        }
+        if (page * size > apartments.size()) return apartments.subList((page - 1) * size, apartments.size());
+        else return apartments.subList((page - 1) * size, page * size);
     }
 
     @Override
