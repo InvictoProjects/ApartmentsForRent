@@ -122,7 +122,7 @@ public class ApartmentController {
         return apartmentConverter.convertToApartmentDto(updatedApartment);
     }
 
-    @GetMapping
+    @GetMapping("/filter")
     public List<ApartmentDto> getAll(@RequestParam int page,
                                      @RequestParam int size,
                                      @RequestParam(required = false) BigDecimal priceFrom,
