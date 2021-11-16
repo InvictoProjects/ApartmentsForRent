@@ -138,6 +138,9 @@ public class ApartmentController {
                                      @RequestParam(required = false) Integer floorTo,
                                      @RequestParam(required = false) Year yearOfBuildFrom,
                                      @RequestParam(required = false) Year yearOfBuildTo) {
+        if (page <= 0 || size <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         return apartmentService.getAllWithFiltering(page, size, priceFrom, priceTo, quantityOfRoomsFrom, quantityOfRoomsTo,
                         areaFrom, areaTo, floorFrom, floorTo, yearOfBuildFrom, yearOfBuildTo).stream()
                 .map(apartmentConverter::convertToApartmentDto)
