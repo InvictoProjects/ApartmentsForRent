@@ -11,7 +11,6 @@ public class OwnerDtoConverter {
                 .setName(ownerDto.getName())
                 .setSurname(ownerDto.getSurname())
                 .setPhoneNumber(ownerDto.getPhoneNumber())
-                .setPasswordHash(ownerDto.getPassword())
                 .build();
     }
 }

@@ -39,7 +39,6 @@ public class ApartmentDtoConverter {
                 .setName(ownerDto.getName())
                 .setSurname(ownerDto.getSurname())
                 .setPhoneNumber(ownerDto.getPhoneNumber())
-                .setPasswordHash(ownerDto.getPassword())
                 .build());
 
         return builder.build();

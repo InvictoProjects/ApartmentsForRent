@@ -32,8 +32,7 @@ public class ApartmentConverter {
         else ownerDto = new OwnerDto(owner.getName(),
                 owner.getSurname(),
                 owner.getEmail(),
-                owner.getPhoneNumber(),
-                owner.getPasswordHash());
+                owner.getPhoneNumber());
         return new ApartmentDto(apartmentDetailsDto, apartmentDescriptionDto, ownerDto);
     }
 }

@@ -5,14 +5,12 @@ public class OwnerDto {
     private String surname;
     private String email;
     private String phoneNumber;
-    private String password;
 
-    public OwnerDto(String name, String surname, String email, String phoneNumber, String password) {
+    public OwnerDto(String name, String surname, String email, String phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.password = password;
     }
 
     public OwnerDto() {
@@ -48,13 +46,5 @@ public class OwnerDto {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }
