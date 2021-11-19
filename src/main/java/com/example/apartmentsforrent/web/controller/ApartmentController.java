@@ -45,11 +45,11 @@ public class ApartmentController {
     }
 
     @Operation(summary = "Get apartment list",
-            description = "This method returns list of apartment DTO's with status 200 if id supplied is correct. Returns 400 if apartments cannot be found by provided page and size")
+            description = "This method returns list of apartment DTO's with status 200 according to page number and size. If no parameters provided returns list of all apartment DTO's. Returns empty list if apartments cannot be found by provided page and size. Returns 400 if page and size are not positive integers.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the apartment",
+            @ApiResponse(responseCode = "200", description = "Apartment's list returned",
                     content = @Content),
-            @ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content)})
+            @ApiResponse(responseCode = "400", description = "Invalid page or size values supplied", content = @Content)})
     @GetMapping
     public ResponseEntity<List<ApartmentDto>> listAll(@Parameter(description = "Page to search")
                                                       @RequestParam(required = false) Integer page,
@@ -71,8 +71,8 @@ public class ApartmentController {
         } else return ResponseEntity.badRequest().build();
     }
 
-    @Operation(summary = "Get apartment by its id",
-            description = "This method returns apartment DTO with status 200 if id supplied is correct. Returns 404 if apartment is not found")
+    @Operation(summary = "Get apartment by it's id",
+            description = "This method returns apartment DTO with status 200 if id supplied is correct. Returns 400 if id is not integer. Returns 404 if apartment is not found.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Apartment found",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApartmentDto.class))}),
@@ -89,7 +89,7 @@ public class ApartmentController {
     }
 
     @Operation(summary = "Create apartment",
-            description = "This method creates apartment by provided apartment DTO with status 200 if id supplied is correct. Returns 400 if apartment dto provided is invalid")
+            description = "This method creates apartment by provided apartment DTO with status 201 if apartment DTO supplied is correct. Returns 400 if apartment dto provided is invalid")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Apartment created"),
             @ApiResponse(responseCode = "400", description = "Invalid apartment dto supplied", content = @Content)})
@@ -103,12 +103,12 @@ public class ApartmentController {
         return apartmentConverter.convertToApartmentDto(createdApartment);
     }
 
-    @Operation(summary = "Update apartment by its id and DTO",
-            description = "This method returns apartment DTO with status 200 if apartment was updated successfully. Returns 404 if apartment is not found")
+    @Operation(summary = "Update apartment by it's id and DTO",
+            description = "This method returns updated apartment DTO with status 200 if apartment was updated successfully. Returns 400 if id or apartment DTO are invalid. Returns 404 if apartment is not found")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Apartment updated",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApartmentDto.class))}),
-            @ApiResponse(responseCode = "400", description = "Invalid apartment DTO supplied", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid id or apartment DTO supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Apartment not found", content = @Content)})
     @PutMapping("/{id}")
     public ApartmentDto updateApartment(@Parameter(description = "Id of apartment", required = true)
@@ -126,12 +126,12 @@ public class ApartmentController {
         return apartmentConverter.convertToApartmentDto(updatedApartment);
     }
 
-    @Operation(summary = "Patch apartment by its id",
-            description = "This method returns apartment DTO with status 200 if apartment was patched successfully. Returns 404 if apartment is not found")
+    @Operation(summary = "Patch apartment by it's id",
+            description = "This method returns updated apartment DTO with status 200 if apartment was patched successfully. Returns 400 if id or apartment DTO are invalid. Returns 404 if apartment is not found")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Apartment patched",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApartmentDto.class))}),
-            @ApiResponse(responseCode = "400", description = "Invalid apartment DTO supplied", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid id or apartment DTO supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Apartment not found", content = @Content)})
     @PatchMapping("/{id}")
     public ApartmentDto patchApartment(@Parameter(description = "Id of apartment", required = true)
@@ -175,11 +175,11 @@ public class ApartmentController {
     }
 
     @Operation(summary = "Get apartment list applying filters",
-            description = "This method returns apartment DTO list with status 200 if filter attributes are correct. Returns 400 if filter attributes are invalid")
+            description = "This method returns apartment DTO list with status 200 if filter attributes are correct. Returns empty list if apartments cannot be found by provided page, size or filter attributes. Returns 400 if page, size or filter attributes are invalid")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Apartment's list returned",
                     content = @Content),
-            @ApiResponse(responseCode = "400", description = "Invalid filter attributes supplied", content = @Content)})
+            @ApiResponse(responseCode = "400", description = "Invalid page, size or filter attributes supplied", content = @Content)})
     @GetMapping("/filter")
     public List<ApartmentDto> getAll(@Parameter(description = "Page to search", required = true) @RequestParam int page,
                                      @Parameter(description = "Size of page", required = true) @RequestParam int size,
@@ -202,10 +202,11 @@ public class ApartmentController {
                 .collect(Collectors.toList());
     }
 
-    @Operation(summary = "Delete apartment by its id",
-            description = "This method deletes apartment with status 200 if apartment was deleted. Returns 404 if apartment is not found")
+    @Operation(summary = "Delete apartment by it's id",
+            description = "This method deletes apartment with status 200 if apartment was deleted. Returns 400 if id is not integer. Returns 404 if apartment is not found")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Apartment found", content = @Content),
+            @ApiResponse(responseCode = "200", description = "Apartment deleted", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "Apartment not found", content = @Content)})
     @DeleteMapping("/{id}")
     public void delete(@Parameter(description = "Apartment id", required = true) @PathVariable Long id) {
