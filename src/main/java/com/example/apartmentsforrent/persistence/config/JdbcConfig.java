@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 public class JdbcConfig {
 
     @Bean
-    public DataSource mysqlDataSource() {
+    public DataSource postgresSqlDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/apartments_db");
