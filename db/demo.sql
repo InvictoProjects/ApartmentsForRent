@@ -33,3 +33,39 @@ VALUES ('м. Київ, вул. Політехнічна, 41, кв. 316', '1945-0
 
 INSERT INTO details (address, year, price, floor, quantity_of_rooms)
 VALUES ('м. Київ, вул. Банкова, 11, кв. 1', '1936-01-01', 1000000, 6, 10);
+
+INSERT INTO descriptions (condition, type, additional_info)
+VALUES ('Дуже хороші умови',
+        'Brick',
+        NULL);
+
+INSERT INTO descriptions (condition, type, additional_info)
+VALUES ('Скоро розвалиться',
+        'Foam block',
+        'Після того, як ми привернули увагу, погляньте на шедевральні умови в деталях до кімнати');
+
+INSERT INTO descriptions (condition, type, additional_info)
+VALUES ('Ремонт найвищого зразка',
+        'Silicate brick',
+        NULL);
+
+INSERT INTO descriptions (condition, type, additional_info)
+VALUES ('Чорновий ремонт',
+        'Monolith',
+        'Проведено чорновий ремонт, подальше можливо зробити за своїм смаком');
+
+INSERT INTO descriptions (condition, type, additional_info)
+VALUES ('Євроремонт',
+        'Panel',
+        'Квартира розроблена та побудована згідно всіх європейських стандартів');
+
+INSERT INTO apartments (details_id, description_id, owner_id)
+VALUES (5, 1, 1);
+INSERT INTO apartments (details_id, description_id, owner_id)
+VALUES (4, 2, 1);
+INSERT INTO apartments (details_id, description_id, owner_id)
+VALUES (3, 3, 2);
+INSERT INTO apartments (details_id, description_id, owner_id)
+VALUES (2, 4, 2);
+INSERT INTO apartments (details_id, description_id, owner_id)
+VALUES (1, 5, 3);
