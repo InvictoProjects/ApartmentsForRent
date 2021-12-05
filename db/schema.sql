@@ -33,3 +33,13 @@ CREATE TABLE owners
 );
 
 GRANT ALL PRIVILEGES ON TABLE owners to apartments_app;
+
+CREATE TABLE apartments
+(
+    id             SERIAL PRIMARY KEY,
+    details_id     SERIAL NOT NULL REFERENCES details (id),
+    description_id SERIAL NOT NULL REFERENCES descriptions (id),
+    owner_id       SERIAL NOT NULL REFERENCES owners (id)
+);
+
+GRANT ALL PRIVILEGES ON TABLE apartments to apartments_app;
