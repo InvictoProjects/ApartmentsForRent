@@ -6,3 +6,5 @@ CREATE TABLE descriptions (
     type building_type NOT NULL,
     additional_info TEXT
 );
+
+GRANT ALL PRIVILEGES ON TABLE descriptions to apartments_app;
