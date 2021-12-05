@@ -1,0 +1,8 @@
+CREATE TYPE building_type AS ENUM ('Brick', 'Frame', 'Silicate brick', 'Panel', 'Foam block', 'Monolith');
+
+CREATE TABLE descriptions (
+    id SERIAL PRIMARY KEY,
+    condition VARCHAR(50) NOT NULL,
+    type building_type NOT NULL,
+    additional_info TEXT
+);
