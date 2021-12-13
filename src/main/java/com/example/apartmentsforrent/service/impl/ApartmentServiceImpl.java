@@ -1,7 +1,7 @@
 package com.example.apartmentsforrent.service.impl;
 
+import com.example.apartmentsforrent.persistence.dao.ApartmentDao;
 import com.example.apartmentsforrent.persistence.model.Apartment;
-import com.example.apartmentsforrent.persistence.repository.ApartmentRepository;
 import com.example.apartmentsforrent.service.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,30 +15,31 @@ import java.util.Optional;
 @Service
 public class ApartmentServiceImpl implements ApartmentService {
 
-    private final ApartmentRepository apartmentRepository;
+    private final ApartmentDao apartmentRepository;
 
     @Autowired
-    public ApartmentServiceImpl(ApartmentRepository apartmentRepository) {
+    public ApartmentServiceImpl(ApartmentDao apartmentRepository) {
         this.apartmentRepository = apartmentRepository;
     }
 
     @Override
     public Apartment create(Apartment apartment) {
-        return apartmentRepository.save(apartment);
+        return apartmentRepository.create(apartment);
     }
 
     @Override
     public Apartment update(Apartment apartment) {
-        if (!apartmentRepository.existsById(apartment.getId())) {
+        if (!existsById(apartment.getId())) {
             throw new IllegalArgumentException(String.format("Apartment with id %s does not exist", apartment.getId()));
         }
-        return apartmentRepository.save(apartment);
+        apartmentRepository.update(apartment);
+        return apartment;
     }
 
     @Override
     public void delete(Apartment apartment) {
         Long apartmentId = apartment.getId();
-        if (!apartmentRepository.existsById(apartmentId)) {
+        if (!existsById(apartmentId)) {
             throw new IllegalArgumentException(String.format("Apartment with id %s does not exist", apartmentId));
         }
         apartmentRepository.delete(apartment);
@@ -46,14 +47,17 @@ public class ApartmentServiceImpl implements ApartmentService {
 
     @Override
     public Optional<Apartment> findById(Long id) {
-        return apartmentRepository.findById(id);
+        return apartmentRepository.read(id);
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return apartmentRepository.read(id).isPresent();
     }
 
     @Override
     public List<Apartment> findAll() {
-        List<Apartment> apartments = new ArrayList<>();
-        apartmentRepository.findAll().forEach(apartments::add);
-        return apartments;
+        return new ArrayList<>(apartmentRepository.findAll());
     }
 
     @Override

@@ -14,6 +14,7 @@ CREATE TABLE details
 (
     id                SERIAL PRIMARY KEY,
     address           VARCHAR(50)    NOT NULL,
+    area              REAL           NOT NULL,
     year              DATE           NOT NULL,
     price             decimal(20, 2) NOT NULL,
     floor             INTEGER        NOT NULL,

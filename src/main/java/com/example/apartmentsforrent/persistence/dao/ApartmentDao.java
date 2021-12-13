@@ -1,22 +1,12 @@
-package com.example.apartmentsforrent.service;
+package com.example.apartmentsforrent.persistence.dao;
 
 import com.example.apartmentsforrent.persistence.model.Apartment;
 
 import java.math.BigDecimal;
 import java.time.Year;
 import java.util.List;
-import java.util.Optional;
 
-public interface ApartmentService {
-    Apartment create(Apartment apartment);
-
-    Apartment update(Apartment apartment);
-
-    void delete(Apartment apartment);
-
-    Optional<Apartment> findById(Long id);
-
-    boolean existsById(Long id);
+public interface ApartmentDao extends CrudDao<Apartment, Long> {
 
     List<Apartment> findAll();
 
