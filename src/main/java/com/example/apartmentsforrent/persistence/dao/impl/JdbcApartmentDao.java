@@ -1,6 +1,9 @@
 package com.example.apartmentsforrent.persistence.dao.impl;
 
 import com.example.apartmentsforrent.persistence.dao.ApartmentDao;
+import com.example.apartmentsforrent.persistence.dao.ApartmentDescriptionDao;
+import com.example.apartmentsforrent.persistence.dao.ApartmentDetailsDao;
+import com.example.apartmentsforrent.persistence.dao.OwnerDao;
 import com.example.apartmentsforrent.persistence.dao.SqlConstants;
 import com.example.apartmentsforrent.persistence.dao.mapper.ApartmentRowMapper;
 import com.example.apartmentsforrent.persistence.model.Apartment;
