@@ -52,7 +52,7 @@ public abstract class SqlConstants {
             "WHERE type = ?;";
 
     public static final String INSERT_OWNER = "INSERT INTO owners (name, surname, email, phone_number, password_hash) " +
-            "VALUES (?, ?', ?, ?, ?);";
+            "VALUES (?, ?, ?, ?, ?);";
 
     public static final String SELECT_OWNER_BY_ID = "SELECT * FROM owners" +
             "WHERE id = ?;";
