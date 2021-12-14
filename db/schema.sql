@@ -8,8 +8,6 @@ CREATE TABLE descriptions
     additional_info TEXT
 );
 
-GRANT ALL PRIVILEGES ON TABLE descriptions to apartments_app;
-
 CREATE TABLE details
 (
     id                SERIAL PRIMARY KEY,
@@ -21,8 +19,6 @@ CREATE TABLE details
     quantity_of_rooms INTEGER        NOT NULL
 );
 
-GRANT ALL PRIVILEGES ON TABLE details to apartments_app;
-
 CREATE TABLE owners
 (
     id            SERIAL PRIMARY KEY,
@@ -33,8 +29,6 @@ CREATE TABLE owners
     password_hash VARCHAR(30) NOT NULL
 );
 
-GRANT ALL PRIVILEGES ON TABLE owners to apartments_app;
-
 CREATE TABLE apartments
 (
     id             SERIAL PRIMARY KEY,
@@ -43,4 +37,5 @@ CREATE TABLE apartments
     owner_id       SERIAL NOT NULL REFERENCES owners (id)
 );
 
-GRANT ALL PRIVILEGES ON TABLE apartments to apartments_app;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO apartments_app;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO apartments_app;
