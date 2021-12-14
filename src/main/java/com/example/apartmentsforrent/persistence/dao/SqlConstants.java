@@ -26,7 +26,8 @@ public abstract class SqlConstants {
             "JOIN owners o on o.id = apartments.owner_id " +
             "LIMIT ? OFFSET ?;";
 
-    public static final String INSERT_DETAILS = "INSERT INTO details (address, area, year, price, floor, quantity_of_rooms) VALUES (?, ?, ?, ?, ?, ?);";
+    public static final String INSERT_DETAILS = "INSERT INTO details (address, area, year, price, floor, quantity_of_rooms) " +
+            "VALUES (?, ?, ?, ?, ?, ?);";
 
     public static final String SELECT_DETAILS_BY_ID = "SELECT * FROM details" +
             "WHERE id = ?;";
@@ -39,10 +40,25 @@ public abstract class SqlConstants {
     public static final String SELECT_DESCRIPTION_BY_ID = "SELECT * FROM descriptions" +
             "WHERE id = ?;";
 
-    public static final String INSERT_DESCRIPTION = "INSERT INTO descriptions (condition, type, additional_info) VALUES (?, ?, ?);";
+    public static final String INSERT_DESCRIPTION = "INSERT INTO descriptions (condition, type, additional_info)" +
+            " VALUES (?, ?, ?);";
 
     public static final String UPDATE_DESCRIPTION_BY_ID = "UPDATE descriptions SET condition = ?, type = ?, " +
             "additional_info = ? WHERE id = ?";
 
     public static final String DELETE_DESCRIPTION_BY_ID = "DELETE FROM descriptions WHERE id = ?";
+
+    public static final String INSERT_OWNER = "INSERT INTO owners (name, surname, email, phone_number, password_hash) " +
+            "VALUES (?, ?', ?, ?, ?);";
+
+    public static final String SELECT_OWNER_BY_ID = "SELECT * FROM owners" +
+            "WHERE id = ?;";
+
+    public static final String UPDATE_OWNER_BY_ID = "UPDATE owners SET name = ?, surname = ?, " +
+            "email = ?, phone_number = ?, password_hash = ? WHERE id = ?";
+
+    public static final String DELETE_OWNER_BY_ID = "DELETE FROM owners WHERE id = ?";
+
+    public static final String SELECT_OWNER_BY_EMAIL = "SELECT * FROM owners" +
+            "WHERE email = ?;";
 }
