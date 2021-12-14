@@ -34,7 +34,7 @@ public class JdbcOwnerDao implements OwnerDao {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement statement = connection.prepareStatement(SqlConstants.INSERT_OWNER);
+            PreparedStatement statement = connection.prepareStatement(SqlConstants.INSERT_OWNER, new String[] {"id"});
             statement.setString(1, name);
             statement.setString(2, surname);
             statement.setString(3, email);
@@ -43,7 +43,7 @@ public class JdbcOwnerDao implements OwnerDao {
             return statement;
         }, keyHolder);
 
-        entity.setId((Long) keyHolder.getKey());
+        entity.setId(keyHolder.getKey().longValue());
 
         return entity;
     }

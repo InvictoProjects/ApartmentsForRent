@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
+import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,14 +34,14 @@ public class JdbcApartmentDescriptionDao implements ApartmentDescriptionDao {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement statement = connection.prepareStatement(SqlConstants.INSERT_DESCRIPTION);
+            PreparedStatement statement = connection.prepareStatement(SqlConstants.INSERT_DESCRIPTION, new String[] {"id"});
             statement.setString(1, condition);
             statement.setString(2, buildingType.getDisplayValue());
             statement.setString(3, additionalInfo);
             return statement;
         }, keyHolder);
 
-        entity.setId((Long) keyHolder.getKey());
+        entity.setId(keyHolder.getKey().longValue());
 
         return entity;
     }

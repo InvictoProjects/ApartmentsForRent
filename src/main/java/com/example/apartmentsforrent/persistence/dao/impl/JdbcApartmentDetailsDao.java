@@ -38,7 +38,7 @@ public class JdbcApartmentDetailsDao implements ApartmentDetailsDao {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement statement = connection.prepareStatement(SqlConstants.INSERT_DETAILS);
+            PreparedStatement statement = connection.prepareStatement(SqlConstants.INSERT_DETAILS, new String[] {"id"});
             statement.setString(1, address);
             statement.setFloat(2, area);
             statement.setDate(3, Date.valueOf(buildYear.atDay(1)));
@@ -48,7 +48,7 @@ public class JdbcApartmentDetailsDao implements ApartmentDetailsDao {
             return statement;
         }, keyHolder);
 
-        entity.setId((Long) keyHolder.getKey());
+        entity.setId(keyHolder.getKey().longValue());
 
         return entity;
     }

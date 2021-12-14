@@ -1,10 +1,6 @@
 package com.example.apartmentsforrent.persistence.dao.impl;
 
-import com.example.apartmentsforrent.persistence.dao.ApartmentDao;
-import com.example.apartmentsforrent.persistence.dao.ApartmentDescriptionDao;
-import com.example.apartmentsforrent.persistence.dao.ApartmentDetailsDao;
-import com.example.apartmentsforrent.persistence.dao.OwnerDao;
-import com.example.apartmentsforrent.persistence.dao.SqlConstants;
+import com.example.apartmentsforrent.persistence.dao.*;
 import com.example.apartmentsforrent.persistence.dao.mapper.ApartmentRowMapper;
 import com.example.apartmentsforrent.persistence.model.Apartment;
 import com.example.apartmentsforrent.persistence.model.ApartmentDescription;
@@ -93,14 +89,14 @@ public class JdbcApartmentDao implements ApartmentDao {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement statement = connection.prepareStatement(SqlConstants.INSERT_APARTMENT);
+            PreparedStatement statement = connection.prepareStatement(SqlConstants.INSERT_APARTMENT, new String[] {"id"});
             statement.setLong(1, detailsId);
             statement.setLong(2, descriptionId);
             statement.setLong(3, ownerId);
             return statement;
         }, keyHolder);
 
-        entity.setId((Long) keyHolder.getKey());
+        entity.setId(keyHolder.getKey().longValue());
 
         return entity;
     }
