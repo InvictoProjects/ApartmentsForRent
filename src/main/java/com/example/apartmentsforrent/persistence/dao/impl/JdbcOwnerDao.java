@@ -26,7 +26,7 @@ public class JdbcOwnerDao implements OwnerDao {
 
     @Override
     public Owner create(Owner entity) {
-        String name = entity.getEmail();
+        String name = entity.getName();
         String surname = entity.getSurname();
         String email = entity.getEmail();
         String phoneNumber = entity.getPhoneNumber();
@@ -65,7 +65,7 @@ public class JdbcOwnerDao implements OwnerDao {
 
     @Override
     public void update(Owner entity) {
-        String name = entity.getEmail();
+        String name = entity.getName();
         String surname = entity.getSurname();
         String email = entity.getEmail();
         String phoneNumber = entity.getPhoneNumber();
