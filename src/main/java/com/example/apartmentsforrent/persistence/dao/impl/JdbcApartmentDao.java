@@ -9,6 +9,7 @@ import com.example.apartmentsforrent.persistence.dao.mapper.ApartmentRowMapper;
 import com.example.apartmentsforrent.persistence.model.Apartment;
 import com.example.apartmentsforrent.persistence.model.ApartmentDescription;
 import com.example.apartmentsforrent.persistence.model.ApartmentDetails;
+import com.example.apartmentsforrent.persistence.model.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -84,8 +85,8 @@ public class JdbcApartmentDao implements ApartmentDao {
             descriptionId = entity.getApartmentDescription().getId();
         }
         if (entity.getOwner().getId() == null) {
-            ApartmentDetails details = apartmentDetailsDao.create(entity.getOwner());
-            ownerId = details.getId();
+            Owner owner = ownerDao.create(entity.getOwner());
+            ownerId = owner.getId();
         } else {
             ownerId = entity.getOwner().getId();
         }
@@ -139,8 +140,8 @@ public class JdbcApartmentDao implements ApartmentDao {
             descriptionId = entity.getApartmentDescription().getId();
         }
         if (entity.getOwner().getId() == null) {
-            ApartmentDetails details = apartmentDetailsDao.create(entity.getOwner());
-            ownerId = details.getId();
+            Owner owner = ownerDao.create(entity.getOwner());
+            ownerId = owner.getId();
         } else {
             ownerDao.update(entity.getOwner());
             ownerId = entity.getOwner().getId();
