@@ -77,7 +77,7 @@ public class JdbcApartmentDetailsDao implements ApartmentDetailsDao {
         int floor = entity.getFloor();
         int quantityOfRooms = entity.getQuantityOfRooms();
 
-        jdbcTemplate.update(SqlConstants.UPDATE_DETAILS_BY_ID, address, area, buildYear, price, floor, quantityOfRooms, entity.getId());
+        jdbcTemplate.update(SqlConstants.UPDATE_DETAILS_BY_ID, address, area, buildYear.atDay(1), price, floor, quantityOfRooms, entity.getId());
     }
 
     @Override
