@@ -73,4 +73,13 @@ public class JdbcApartmentDescriptionDao implements ApartmentDescriptionDao {
     public void delete(ApartmentDescription entity) {
         jdbcTemplate.update(SqlConstants.DELETE_DESCRIPTION_BY_ID, entity.getId());
     }
+
+    @Override
+    public List<ApartmentDescription> findByBuildingType(BuildingType buildingType) {
+        return jdbcTemplate.query(connection -> {
+            PreparedStatement statement = connection.prepareStatement(SqlConstants.SELECT_DESCRIPTION_BY_TYPE);
+            statement.setString(1, buildingType.getDisplayValue());
+            return statement;
+        }, new ApartmentDescriptionRowMapper());
+    }
 }

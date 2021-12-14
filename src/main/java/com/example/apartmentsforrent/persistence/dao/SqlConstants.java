@@ -48,6 +48,9 @@ public abstract class SqlConstants {
 
     public static final String DELETE_DESCRIPTION_BY_ID = "DELETE FROM descriptions WHERE id = ?";
 
+    public static final String SELECT_DESCRIPTION_BY_TYPE = "SELECT * FROM descriptions" +
+            "WHERE type = ?;";
+
     public static final String INSERT_OWNER = "INSERT INTO owners (name, surname, email, phone_number, password_hash) " +
             "VALUES (?, ?', ?, ?, ?);";
 
