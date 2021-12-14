@@ -36,7 +36,7 @@ public class JdbcApartmentDescriptionDao implements ApartmentDescriptionDao {
         jdbcTemplate.update(connection -> {
             PreparedStatement statement = connection.prepareStatement(SqlConstants.INSERT_DESCRIPTION, new String[] {"id"});
             statement.setString(1, condition);
-            statement.setString(2, buildingType.getDisplayValue());
+            statement.setObject(2, buildingType, Types.OTHER);
             statement.setString(3, additionalInfo);
             return statement;
         }, keyHolder);
@@ -67,7 +67,14 @@ public class JdbcApartmentDescriptionDao implements ApartmentDescriptionDao {
         BuildingType buildingType = entity.getBuildingType();
         String additionalInfo = entity.getAdditionalInfo();
 
-        jdbcTemplate.update(SqlConstants.UPDATE_DESCRIPTION_BY_ID, condition, buildingType, additionalInfo, entity.getId());
+        jdbcTemplate.update(connection -> {
+            PreparedStatement statement = connection.prepareStatement(SqlConstants.UPDATE_DESCRIPTION_BY_ID);
+            statement.setString(1, condition);
+            statement.setObject(2, buildingType, Types.OTHER);
+            statement.setString(3, additionalInfo);
+            statement.setLong(4, entity.getId());
+            return statement;
+        });
     }
 
     @Override

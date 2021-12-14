@@ -13,7 +13,7 @@ public class ApartmentDescriptionRowMapper implements RowMapper<ApartmentDescrip
         return new ApartmentDescription.Builder()
                 .setId(rs.getLong("description_id"))
                 .setCondition(rs.getString("condition"))
-                .setBuildingType(BuildingType.resolve(rs.getString("type")))
+                .setBuildingType(BuildingType.valueOf(rs.getString("type")))
                 .setAdditionalInfo(rs.getString("additional_info"))
                 .build();
     }

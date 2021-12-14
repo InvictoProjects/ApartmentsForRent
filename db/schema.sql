@@ -1,4 +1,4 @@
-CREATE TYPE building_type AS ENUM ('Brick', 'Frame', 'Silicate brick', 'Panel', 'Foam block', 'Monolith');
+CREATE TYPE building_type AS ENUM ('BRICK', 'FRAME', 'SILICATE_BRICK', 'PANEL', 'FOAM_BLOCK', 'MONOLITH');
 
 CREATE TABLE descriptions
 (

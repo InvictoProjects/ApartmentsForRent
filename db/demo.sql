@@ -36,27 +36,27 @@ VALUES ('м. Київ, вул. Банкова, 11, кв. 1', 300, '1936-01-01', 
 
 INSERT INTO descriptions (condition, type, additional_info)
 VALUES ('Дуже хороші умови',
-        'Brick',
+        'BRICK',
         NULL);
 
 INSERT INTO descriptions (condition, type, additional_info)
 VALUES ('Скоро розвалиться',
-        'Foam block',
+        'FOAM_BLOCK',
         'Після того, як ми привернули увагу, погляньте на шедевральні умови в деталях до кімнати');
 
 INSERT INTO descriptions (condition, type, additional_info)
 VALUES ('Ремонт найвищого зразка',
-        'Silicate brick',
+        'SILICATE_BRICK',
         NULL);
 
 INSERT INTO descriptions (condition, type, additional_info)
 VALUES ('Чорновий ремонт',
-        'Monolith',
+        'MONOLITH',
         'Проведено чорновий ремонт, подальше можливо зробити за своїм смаком');
 
 INSERT INTO descriptions (condition, type, additional_info)
 VALUES ('Євроремонт',
-        'Panel',
+        'PANEL',
         'Квартира розроблена та побудована згідно всіх європейських стандартів');
 
 INSERT INTO apartments (details_id, description_id, owner_id)
