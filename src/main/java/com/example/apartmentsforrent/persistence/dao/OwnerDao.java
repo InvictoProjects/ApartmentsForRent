@@ -2,8 +2,8 @@ package com.example.apartmentsforrent.persistence.dao;
 
 import com.example.apartmentsforrent.persistence.model.Owner;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface OwnerDao extends CrudDao<Owner, Long> {
-    List<Owner> findByEmail(String email);
+    Optional<Owner> findByEmail(String email);
 }

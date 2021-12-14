@@ -80,11 +80,17 @@ public class JdbcOwnerDao implements OwnerDao {
     }
 
     @Override
-    public List<Owner> findByEmail(String email) {
-        return jdbcTemplate.query(connection -> {
+    public Optional<Owner> findByEmail(String email) {
+        List<Owner> result = jdbcTemplate.query(connection -> {
             PreparedStatement statement = connection.prepareStatement(SqlConstants.SELECT_OWNER_BY_EMAIL);
             statement.setString(1, email);
             return statement;
         }, new OwnerRowMapper());
+
+        if (result.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(result.get(0));
+        }
     }
 }

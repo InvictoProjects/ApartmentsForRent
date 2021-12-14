@@ -28,7 +28,7 @@ CREATE TABLE owners
     id            SERIAL PRIMARY KEY,
     name          VARCHAR(30) NOT NULL,
     surname       VARCHAR(30) NOT NULL,
-    email         VARCHAR(30) NOT NULL,
+    email         VARCHAR(30) NOT NULL UNIQUE,
     phone_number  VARCHAR(30) NOT NULL,
     password_hash VARCHAR(30) NOT NULL
 );
