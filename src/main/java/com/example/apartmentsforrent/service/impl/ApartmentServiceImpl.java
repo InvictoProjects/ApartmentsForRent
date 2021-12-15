@@ -60,13 +60,17 @@ public class ApartmentServiceImpl implements ApartmentService {
         return apartment;
     }
 
+    @Transactional
     @Override
     public void delete(Apartment apartment) {
         Long apartmentId = apartment.getId();
         if (!existsById(apartmentId)) {
             throw new IllegalArgumentException(String.format("Apartment with id %s does not exist", apartmentId));
         }
+
         apartmentDao.delete(apartment);
+        apartmentDetailsDao.delete(apartment.getApartmentDetails());
+        apartmentDescriptionDao.delete(apartment.getApartmentDescription());
     }
 
     @Transactional
@@ -121,15 +125,15 @@ public class ApartmentServiceImpl implements ApartmentService {
 
     private Apartment buildApartmentByDetails(ApartmentDetails detail) {
         Apartment apartment = apartmentDao.findByDetailsId(detail.getId())
-                .orElseThrow(() -> new IllegalArgumentException("There is no such details"));
+                .orElseThrow(() -> new IllegalArgumentException("There is no such apartment"));
         return getApartment(apartment, detail);
     }
 
     private Apartment getApartment(Apartment apartment, ApartmentDetails detail) {
         ApartmentDescription description = apartmentDescriptionDao.read(apartment.getApartmentDescriptionId())
-                .orElseThrow(() -> new IllegalArgumentException("There is no such details"));
+                .orElseThrow(() -> new IllegalArgumentException("There is no such description"));
         Owner owner = ownerDao.read(apartment.getOwnerId())
-                .orElseThrow(() -> new IllegalArgumentException("There is no such details"));
+                .orElseThrow(() -> new IllegalArgumentException("There is no such owner"));
 
         apartment.setApartmentDetails(detail);
         apartment.setApartmentDescription(description);

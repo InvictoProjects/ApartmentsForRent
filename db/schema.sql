@@ -32,9 +32,9 @@ CREATE TABLE owners
 CREATE TABLE apartments
 (
     id             SERIAL PRIMARY KEY,
-    details_id     SERIAL NOT NULL REFERENCES details (id),
-    description_id SERIAL NOT NULL REFERENCES descriptions (id),
-    owner_id       SERIAL NOT NULL REFERENCES owners (id)
+    details_id     SERIAL NOT NULL REFERENCES details (id) ON DELETE CASCADE,
+    description_id SERIAL NOT NULL REFERENCES descriptions (id) ON DELETE CASCADE,
+    owner_id       SERIAL NOT NULL REFERENCES owners (id) ON DELETE CASCADE
 );
 
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO apartments_app;
