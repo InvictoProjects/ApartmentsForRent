@@ -1,5 +1,7 @@
 package com.example.apartmentsforrent.persistence.model;
 
+import java.util.Objects;
+
 public class Owner {
     private Long id;
     private String name;
@@ -9,6 +11,19 @@ public class Owner {
     private String passwordHash;
 
     public Owner() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Owner owner = (Owner) o;
+        return Objects.equals(name, owner.name) && Objects.equals(surname, owner.surname) && Objects.equals(email, owner.email) && Objects.equals(phoneNumber, owner.phoneNumber) && Objects.equals(passwordHash, owner.passwordHash);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, email, phoneNumber, passwordHash);
     }
 
     public static class Builder {

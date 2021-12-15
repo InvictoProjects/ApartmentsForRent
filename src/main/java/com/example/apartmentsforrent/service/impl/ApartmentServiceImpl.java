@@ -45,8 +45,18 @@ public class ApartmentServiceImpl implements ApartmentService {
         ApartmentDescription description = apartmentDescriptionDao.create(apartment.getApartmentDescription());
         apartment.setApartmentDescriptionId(description.getId());
 
-        Owner owner = ownerDao.create(apartment.getOwner());
-        apartment.setOwnerId(owner.getId());
+        Optional<Owner> optionalOwner = ownerDao.findByEmail(apartment.getOwner().getEmail());
+        if (optionalOwner.isPresent()) {
+            Owner owner = optionalOwner.get();
+            apartment.setOwnerId(owner.getId());
+            apartment.getOwner().setId(owner.getId());
+            if (!owner.equals(apartment.getOwner())) {
+                ownerDao.update(apartment.getOwner());
+            }
+        } else {
+            Owner owner = ownerDao.create(apartment.getOwner());
+            apartment.setOwnerId(owner.getId());
+        }
 
         return apartmentDao.create(apartment);
     }
