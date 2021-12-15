@@ -122,6 +122,7 @@ public class ApartmentController {
         Apartment newApartment = apartmentDtoConverter.convertToApartment(apartmentDto);
         apartment.setApartmentDetails(newApartment.getApartmentDetails());
         apartment.setApartmentDescription(newApartment.getApartmentDescription());
+        apartment.setOwner(newApartment.getOwner());
         Apartment updatedApartment = apartmentService.update(apartment);
         return apartmentConverter.convertToApartmentDto(updatedApartment);
     }

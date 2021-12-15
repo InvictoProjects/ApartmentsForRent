@@ -3,7 +3,9 @@ package com.example.apartmentsforrent.persistence.dao.impl;
 import com.example.apartmentsforrent.persistence.dao.ApartmentDetailsDao;
 import com.example.apartmentsforrent.persistence.dao.SqlConstants;
 import com.example.apartmentsforrent.persistence.dao.mapper.ApartmentDetailsRowMapper;
+import com.example.apartmentsforrent.persistence.dao.mapper.OwnerRowMapper;
 import com.example.apartmentsforrent.persistence.model.ApartmentDetails;
+import com.example.apartmentsforrent.persistence.model.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -112,6 +114,21 @@ public class JdbcApartmentDetailsDao implements ApartmentDetailsDao {
     @Override
     public void delete(ApartmentDetails entity) {
         jdbcTemplate.update(SqlConstants.DELETE_DETAILS_BY_ID, entity.getId());
+    }
+
+    @Override
+    public Optional<ApartmentDetails> findByAddress(String address) {
+        List<ApartmentDetails> result = jdbcTemplate.query(connection -> {
+            PreparedStatement statement = connection.prepareStatement(SqlConstants.SELECT_DETAILS_BY_ADDRESS);
+            statement.setString(1, address);
+            return statement;
+        }, new ApartmentDetailsRowMapper());
+
+        if (result.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(result.get(0));
+        }
     }
 
     private String createSearchStatement(int limit, int offset, BigDecimal priceFrom, BigDecimal priceTo,

@@ -19,6 +19,8 @@ public abstract class SqlConstants {
 
     public static final String SELECT_DETAILS_BY_ID = "SELECT * FROM details WHERE id = ?;";
 
+    public static final String SELECT_DETAILS_BY_ADDRESS = "SELECT * FROM details WHERE address = ?;";
+
     public static final String INSERT_DETAILS = "INSERT INTO details (address, area, year, price, floor, quantity_of_rooms) " +
             "VALUES (?, ?, ?, ?, ?, ?);";
 
@@ -45,10 +47,11 @@ public abstract class SqlConstants {
 
     public static final String SELECT_OWNER_BY_ID = "SELECT * FROM owners WHERE id = ?;";
 
+    public static final String SELECT_OWNER_BY_EMAIL = "SELECT * FROM owners WHERE email = ?;";
+
     public static final String UPDATE_OWNER_BY_ID = "UPDATE owners SET name = ?, surname = ?, " +
             "email = ?, phone_number = ?, password_hash = ? WHERE id = ?";
 
     public static final String DELETE_OWNER_BY_ID = "DELETE FROM owners WHERE id = ?;";
 
-    public static final String SELECT_OWNER_BY_EMAIL = "SELECT * FROM owners WHERE email = ?;";
 }

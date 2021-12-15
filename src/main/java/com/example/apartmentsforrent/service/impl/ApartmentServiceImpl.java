@@ -61,12 +61,29 @@ public class ApartmentServiceImpl implements ApartmentService {
         return apartmentDao.create(apartment);
     }
 
+    @Transactional
     @Override
     public Apartment update(Apartment apartment) {
         if (!existsById(apartment.getId())) {
             throw new IllegalArgumentException(String.format("Apartment with id %s does not exist", apartment.getId()));
         }
+
+        Apartment populatedApartment = apartmentDao.read(apartment.getId())
+                .orElseThrow(() -> new IllegalArgumentException("There is on such an apartment"));
+
+        apartment.setApartmentDetailsId(populatedApartment.getApartmentDetailsId());
+        apartment.getApartmentDetails().setId(populatedApartment.getApartmentDetailsId());
+
+        apartment.setApartmentDescriptionId(populatedApartment.getApartmentDescriptionId());
+        apartment.getApartmentDescription().setId(populatedApartment.getApartmentDescriptionId());
+
+        apartment.setOwnerId(populatedApartment.getOwnerId());
+        apartment.getOwner().setId(populatedApartment.getOwnerId());
+
         apartmentDao.update(apartment);
+        apartmentDetailsDao.update(apartment.getApartmentDetails());
+        apartmentDescriptionDao.update(apartment.getApartmentDescription());
+        ownerDao.update(apartment.getOwner());
         return apartment;
     }
 

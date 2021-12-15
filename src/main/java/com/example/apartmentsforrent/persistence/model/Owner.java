@@ -18,12 +18,13 @@ public class Owner {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Owner owner = (Owner) o;
-        return Objects.equals(name, owner.name) && Objects.equals(surname, owner.surname) && Objects.equals(email, owner.email) && Objects.equals(phoneNumber, owner.phoneNumber) && Objects.equals(passwordHash, owner.passwordHash);
+        return Objects.equals(name, owner.name) && Objects.equals(surname, owner.surname) && Objects.equals(email, owner.email) &&
+                Objects.equals(phoneNumber, owner.phoneNumber) && Objects.equals(passwordHash, owner.passwordHash);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, phoneNumber, passwordHash);
+        return Objects.hash(name, surname, email, phoneNumber, passwordHash);
     }
 
     public static class Builder {
