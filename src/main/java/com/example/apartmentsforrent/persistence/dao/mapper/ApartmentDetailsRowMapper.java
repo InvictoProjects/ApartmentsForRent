@@ -12,7 +12,7 @@ public class ApartmentDetailsRowMapper implements RowMapper<ApartmentDetails> {
     @Override
     public ApartmentDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new ApartmentDetails.Builder()
-                .setId(rs.getLong("details_id"))
+                .setId(rs.getLong("id"))
                 .setAddress(rs.getString("address"))
                 .setBuildYear(Year.of(rs.getDate("year").toLocalDate().getYear()))
                 .setPrice(rs.getBigDecimal("price"))

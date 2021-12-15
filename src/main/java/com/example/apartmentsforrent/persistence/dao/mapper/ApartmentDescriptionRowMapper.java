@@ -11,7 +11,7 @@ public class ApartmentDescriptionRowMapper implements RowMapper<ApartmentDescrip
     @Override
     public ApartmentDescription mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new ApartmentDescription.Builder()
-                .setId(rs.getLong("description_id"))
+                .setId(rs.getLong("id"))
                 .setCondition(rs.getString("condition"))
                 .setBuildingType(BuildingType.valueOf(rs.getString("type")))
                 .setAdditionalInfo(rs.getString("additional_info"))

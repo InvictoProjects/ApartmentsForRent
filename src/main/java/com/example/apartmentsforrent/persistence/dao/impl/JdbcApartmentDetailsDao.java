@@ -15,6 +15,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.time.Year;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -25,6 +26,34 @@ public class JdbcApartmentDetailsDao implements ApartmentDetailsDao {
     @Autowired
     public JdbcApartmentDetailsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public List<ApartmentDetails> getAllWithFiltering(int page, int size, BigDecimal priceFrom, BigDecimal priceTo,
+                                               Integer quantityOfRoomsFrom, Integer quantityOfRoomsTo, Float areaFrom,
+                                               Float areaTo, Integer floorFrom, Integer floorTo, Year yearOfBuildFrom,
+                                               Year yearOfBuildTo) {
+        int offset = (page-1)*size;
+        String statementString = createSearchStatement(size, offset, priceFrom, priceTo, quantityOfRoomsFrom, quantityOfRoomsTo,
+                areaFrom, areaTo, floorFrom, floorTo, yearOfBuildFrom, yearOfBuildTo);
+
+        return jdbcTemplate.query(statementString, new ApartmentDetailsRowMapper());
+    }
+
+    @Override
+    public List<ApartmentDetails> findAll() {
+        return jdbcTemplate.query(SqlConstants.SELECT_ALL_DETAILS, new ApartmentDetailsRowMapper());
+    }
+
+    @Override
+    public List<ApartmentDetails> findAll(int page, int size) {
+        int toIgnore = (page-1)*size;
+        return jdbcTemplate.query(connection -> {
+            PreparedStatement statement = connection.prepareStatement(SqlConstants.SELECT_DETAILS_WITH_LIMIT);
+            statement.setInt(1, size);
+            statement.setInt(2, toIgnore);
+            return statement;
+        }, new ApartmentDetailsRowMapper());
     }
 
     @Override
@@ -48,7 +77,7 @@ public class JdbcApartmentDetailsDao implements ApartmentDetailsDao {
             return statement;
         }, keyHolder);
 
-        entity.setId(keyHolder.getKey().longValue());
+        entity.setId(Objects.requireNonNull(keyHolder.getKey()).longValue());
 
         return entity;
     }
@@ -83,5 +112,52 @@ public class JdbcApartmentDetailsDao implements ApartmentDetailsDao {
     @Override
     public void delete(ApartmentDetails entity) {
         jdbcTemplate.update(SqlConstants.DELETE_DETAILS_BY_ID, entity.getId());
+    }
+
+    private String createSearchStatement(int limit, int offset, BigDecimal priceFrom, BigDecimal priceTo,
+                                         Integer quantityOfRoomsFrom, Integer quantityOfRoomsTo, Float areaFrom,
+                                         Float areaTo, Integer floorFrom, Integer floorTo, Year yearOfBuildFrom,
+                                         Year yearOfBuildTo) {
+        return "SELECT * FROM details " +
+                createWhenSubQuery("price", priceFrom.toString(), priceTo.toString()) +
+                createWhenSubQuery("floor", floorFrom != null ? floorFrom.toString() : null, floorTo != null ? floorTo.toString() : null) +
+                createWhenSubQuery("area", areaFrom != null ? areaFrom.toString() : null, areaTo != null ? areaTo.toString() : null) +
+                createWhenSubQuery("year", yearOfBuildFrom != null ? yearOfBuildFrom.toString() : null, yearOfBuildTo != null ? yearOfBuildTo.toString() : null) +
+                createWhenSubQuery("quantity_of_rooms", quantityOfRoomsFrom != null ? quantityOfRoomsFrom.toString() : null, quantityOfRoomsTo != null ? quantityOfRoomsTo.toString() : null) +
+                "LIMIT " +
+                limit +
+                " OFFSET " +
+                offset +
+                ";";
+    }
+
+    private String createWhenSubQuery(String columnName, String valueFrom, String valueTo) {
+        StringBuilder subStatement = new StringBuilder();
+        if (valueFrom != null && valueTo == null) {
+            subStatement.append("WHERE ")
+                    .append(columnName)
+                    .append(" >= ")
+                    .append(valueFrom)
+                    .append(" ");
+        }
+        if (valueFrom == null && valueTo != null) {
+            subStatement.append("WHERE ")
+                    .append(columnName)
+                    .append(" <= ")
+                    .append(valueTo)
+                    .append(" ");
+        }
+        if (valueFrom != null && valueTo != null) {
+            subStatement.append("WHERE ")
+                    .append(columnName)
+                    .append(" >= ")
+                    .append(valueFrom)
+                    .append(" AND ")
+                    .append(columnName)
+                    .append(" <= ")
+                    .append(valueTo)
+                    .append(" ");
+        }
+        return subStatement.toString();
     }
 }

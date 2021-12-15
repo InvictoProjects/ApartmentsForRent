@@ -2,8 +2,11 @@ package com.example.apartmentsforrent.persistence.model;
 
 public class Apartment {
     private Long id;
+    private Long apartmentDetailsId;
     private ApartmentDetails apartmentDetails;
+    private Long apartmentDescriptionId;
     private ApartmentDescription apartmentDescription;
+    private Long ownerId;
     private Owner owner;
 
     public Apartment() {
@@ -11,12 +14,30 @@ public class Apartment {
 
     public static class Builder {
         private Long id;
+        private Long apartmentDetailsId;
         private ApartmentDetails apartmentDetails;
+        private Long apartmentDescriptionId;
         private ApartmentDescription apartmentDescription;
+        private Long ownerId;
         private Owner owner;
 
         public Builder setId(Long id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder setApartmentDetailsId(Long apartmentDetailsId) {
+            this.apartmentDetailsId = apartmentDetailsId;
+            return this;
+        }
+
+        public Builder setApartmentDescriptionId(Long apartmentDescriptionId) {
+            this.apartmentDescriptionId = apartmentDescriptionId;
+            return this;
+        }
+
+        public Builder setOwnerId(Long ownerId) {
+            this.ownerId = ownerId;
             return this;
         }
 
@@ -42,6 +63,9 @@ public class Apartment {
 
     private Apartment(Builder builder) {
         this.id = builder.id;
+        this.apartmentDetailsId = builder.apartmentDetailsId;
+        this.apartmentDescriptionId = builder.apartmentDescriptionId;
+        this.ownerId = builder.ownerId;
         this.apartmentDetails = builder.apartmentDetails;
         this.apartmentDescription = builder.apartmentDescription;
         this.owner = builder.owner;
@@ -53,6 +77,30 @@ public class Apartment {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getApartmentDetailsId() {
+        return apartmentDetailsId;
+    }
+
+    public void setApartmentDetailsId(Long apartmentDetailsId) {
+        this.apartmentDetailsId = apartmentDetailsId;
+    }
+
+    public Long getApartmentDescriptionId() {
+        return apartmentDescriptionId;
+    }
+
+    public void setApartmentDescriptionId(Long apartmentDescriptionId) {
+        this.apartmentDescriptionId = apartmentDescriptionId;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public ApartmentDetails getApartmentDetails() {

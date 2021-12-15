@@ -10,7 +10,7 @@ public class OwnerRowMapper implements RowMapper<Owner> {
     @Override
     public Owner mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new Owner.Builder()
-                .setId(rs.getLong("owner_id"))
+                .setId(rs.getLong("id"))
                 .setName(rs.getString("name"))
                 .setSurname(rs.getString("surname"))
                 .setEmail(rs.getString("email"))
