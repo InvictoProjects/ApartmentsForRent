@@ -9,12 +9,14 @@ import com.example.apartmentsforrent.persistence.model.ApartmentDescription;
 import com.example.apartmentsforrent.persistence.model.ApartmentDetails;
 import com.example.apartmentsforrent.persistence.model.Owner;
 import com.example.apartmentsforrent.service.ApartmentService;
+import com.example.apartmentsforrent.web.dto.ApartmentDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.Year;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -122,6 +124,7 @@ public class ApartmentServiceImpl implements ApartmentService {
     public List<Apartment> findAll() {
         return apartmentDetailsDao.findAll().stream()
                 .map(this::buildApartmentByDetails)
+                .sorted(Comparator.comparing(Apartment::getId))
                 .collect(Collectors.toList());
     }
 
@@ -130,6 +133,7 @@ public class ApartmentServiceImpl implements ApartmentService {
     public List<Apartment> findAll(int page, int size) {
         return apartmentDetailsDao.findAll(page, size).stream()
                 .map(this::buildApartmentByDetails)
+                .sorted(Comparator.comparing(Apartment::getId))
                 .collect(Collectors.toList());
     }
 
@@ -141,6 +145,7 @@ public class ApartmentServiceImpl implements ApartmentService {
         return apartmentDetailsDao.getAllWithFiltering(page, size, priceFrom, priceTo, quantityOfRoomsFrom, quantityOfRoomsTo, areaFrom,
                 areaTo, floorFrom, floorTo, yearOfBuildFrom, yearOfBuildTo).stream()
                 .map(this::buildApartmentByDetails)
+                .sorted(Comparator.comparing(Apartment::getId))
                 .collect(Collectors.toList());
     }
 
