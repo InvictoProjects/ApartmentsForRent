@@ -9,7 +9,6 @@ import com.example.apartmentsforrent.persistence.model.ApartmentDescription;
 import com.example.apartmentsforrent.persistence.model.ApartmentDetails;
 import com.example.apartmentsforrent.persistence.model.Owner;
 import com.example.apartmentsforrent.service.ApartmentService;
-import com.example.apartmentsforrent.web.dto.ApartmentDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

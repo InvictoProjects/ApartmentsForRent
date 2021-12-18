@@ -1,6 +1,5 @@
 package com.example.apartmentsforrent.persistence.dao;
 
-import com.example.apartmentsforrent.persistence.model.Apartment;
 import com.example.apartmentsforrent.persistence.model.ApartmentDetails;
 
 import java.math.BigDecimal;
