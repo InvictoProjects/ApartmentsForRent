@@ -2,6 +2,7 @@ package com.example.apartmentsforrent.persistence.model;
 
 import java.math.BigDecimal;
 import java.time.Year;
+import java.util.Objects;
 
 public class ApartmentDetails {
     private Long id;
@@ -13,6 +14,20 @@ public class ApartmentDetails {
     private int quantityOfRooms;
 
     public ApartmentDetails() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ApartmentDetails details = (ApartmentDetails) o;
+        return floor == details.floor && Float.compare(details.area, area) == 0 && quantityOfRooms == details.quantityOfRooms
+                && Objects.equals(address, details.address) && Objects.equals(buildYear, details.buildYear) && Objects.equals(price, details.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address, buildYear, price, floor, area, quantityOfRooms);
     }
 
     public static class Builder {

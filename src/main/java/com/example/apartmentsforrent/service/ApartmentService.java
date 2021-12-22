@@ -16,6 +16,8 @@ public interface ApartmentService {
 
     Optional<Apartment> findById(Long id);
 
+    boolean existsById(Long id);
+
     List<Apartment> findAll();
 
     List<Apartment> findAll(int page, int size);
